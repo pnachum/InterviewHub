@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import QuestionShape from '../shapes/QuestionShape';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 const propTypes = {
   question: QuestionShape,
@@ -18,27 +19,30 @@ export default function QuestionRow({ question, onDelete, onApprove, onReject })
       </td>
 
       <td>
-        <button
-          className="btn btn-success glyphicon glyphicon-ok"
+        <Button
+          bsStyle="success"
           disabled={question.status === 'approved'}
           onClick={onApprove}
         >
-        </button>
+          <Glyphicon glyph="ok" />
+        </Button>
 
-        <button
-          className="btn btn-success glyphicon glyphicon-remove"
+        <Button
+          bsStyle="success"
           disabled={question.status === 'rejected'}
           onClick={onReject}
         >
-        </button>
+          <Glyphicon glyph="remove" />
+        </Button>
       </td>
 
       <td>
-        <button
-          className="btn btn-danger glyphicon glyphicon-trash"
+        <Button
+          bsStyle="danger"
           onClick={onDelete}
         >
-        </button>
+          <Glyphicon glyph="trash" />
+        </Button>
       </td>
     </tr>
   );
