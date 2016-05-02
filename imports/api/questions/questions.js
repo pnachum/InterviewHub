@@ -1,17 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-// import { SimpleSchema } from 'meteor/aldeed:simple-schema'
 
 export const Questions = new Mongo.Collection('Questions');
-
-Questions.schema = new SimpleSchema({
-  title: { type: String },
-  content: { type: String },
-  status: { type: String, defaultValue: 'pending' },
-  userId: { type: String },
-  createdAt: { type: Date },
-});
 
 if (Meteor.isServer) {
   Meteor.publish('questions.approved', function approvedQuestionsPublication() {
