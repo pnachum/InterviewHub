@@ -11,14 +11,20 @@ const propTypes = {
 class App extends React.Component {
 
   getChildContext() {
-    return { user: this.props.user }
+    const user = this.props.user;
+    const id = user ? user._id : null;
+    const isLoggedIn = !!id;
+    return {
+      isAdmin: isLoggedIn && Roles.userIsInRole(id, ['admin']),
+      isLoggedIn,
+    };
   }
 
   render() {
     const { user } = this.props;
     return (
       <div>
-        <Navbar userId={user ? user._id : null} />
+        <Navbar />
         {this.props.children}
       </div>
     );
@@ -26,7 +32,10 @@ class App extends React.Component {
 }
 
 App.propTypes = propTypes;
-App.childContextTypes = propTypes;
+App.childContextTypes = {
+  isLoggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
+};
 
 export default createContainer(() => {
   return {

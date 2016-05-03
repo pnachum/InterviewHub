@@ -2,18 +2,14 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 
-const propTypes = {
-  userId: PropTypes.string,
-};
-
-export default function Navbar({ userId }) {
+export default function Navbar(props, { isLoggedIn, isAdmin }) {
   return (
     <nav className="navbar navbar-default">
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav">
           <li><Link to="/">All questions</Link></li>
-          {userId && <li><Link to="/new">Submit question</Link></li>}
-          {userId && <li><Link to="admin">Admin</Link></li>}
+          {isLoggedIn && <li><Link to="/new">Submit question</Link></li>}
+          {isAdmin && <li><Link to="admin">Admin</Link></li>}
           <li><AccountsUIWrapper /></li>
           {/*<li><a href="#" {{action 'randomQuestion'}}>Random question</a></li>*/}
         </ul>
@@ -22,4 +18,7 @@ export default function Navbar({ userId }) {
   );
 }
 
-Navbar.propTypes = propTypes;
+Navbar.contextTypes = {
+  isLoggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
+}

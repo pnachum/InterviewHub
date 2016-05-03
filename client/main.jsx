@@ -40,6 +40,12 @@ function requireAuth(nextState, replace) {
 }
 
 function requireAdmin(nextState, replace) {
-  {/* TODO: Change to actually require admin credentials */}
-  requireAuth(...arguments);
+  const id = Meteor.userId();
+  // Gross global reference to Roles from alanning/meteor-roles
+  if (!id || !Roles.userIsInRole(id, ['admin'])) {
+    replace({
+      pathname: '/',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
 }

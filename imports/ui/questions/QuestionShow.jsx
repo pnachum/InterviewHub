@@ -4,26 +4,25 @@ import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
-import UserShape from '../shapes/UserShape';
 
 const propTypes = {
   question: QuestionShape.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 class QuestionShow extends React.Component {
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { isLoggedIn, question } = this.props;
-    // When a user is on this page and logs out
-    if (!isLoggedIn && question.status !== 'approved') {
+    const { isAdmin, question } = this.props;
+    // When an admin is on this page and logs out
+    if (!isAdmin && (question == null || question.status !== 'approved')) {
       this.context.router.push('/');
     }
   }
 
   render() {
     const { question } = this.props;
-    if (question) {
+    if (question != null) {
       return (
         <div>
           <h2>{question.title}</h2>
@@ -45,12 +44,14 @@ QuestionShow.contextTypes = {
 export default createContainer((props) => {
   const id = props.params.id;
   Meteor.subscribe('question', id);
+  const userId = Meteor.userId();
   return Object.assign(
     {
       question: Questions.findOne(id),
-      // For some reason, using context like in QuestionNew and AdminApp to access user doesn't
-      // trigger componentDidUpdate when the user logs out. So handle it here instead.
-      isLoggedIn: !!Meteor.userId(),
+      // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
+      // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
+      // instead, which unfortunately duplicates the logic
+      isAdmin: !!userId && Roles.userIsInRole(userId, ['admin']),
     },
     // Pass through everything that came from the router
     props

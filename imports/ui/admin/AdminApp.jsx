@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import UserShape from '../shapes/UserShape';
 
 export default class AdminApp extends React.Component {
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    // When a user is on this page and logs out
-    if (!this.context.user) {
+    // When an admin is on this page and logs out
+    if (!this.context.isAdmin) {
       this.context.router.push('/');
     }
   }
@@ -19,5 +18,5 @@ export default class AdminApp extends React.Component {
 
 AdminApp.contextTypes = {
   router: PropTypes.object,
-  user: UserShape,
+  isAdmin: PropTypes.bool,
 };

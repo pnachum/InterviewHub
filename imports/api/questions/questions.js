@@ -4,17 +4,34 @@ import { check } from 'meteor/check';
 
 export const Questions = new Mongo.Collection('Questions');
 
+function isUserAdmin() {
+  // Shitty global refernce to alanning/meteor-roles
+  return this.userId && Roles.userIsInRole(this.userId, ['admin']);
+}
+
 if (Meteor.isServer) {
   Meteor.publish('questions.approved', function approvedQuestionsPublication() {
     return Questions.find({ status: 'approved' });
   });
 
   Meteor.publish('questions.all', function allQuestionsPublication() {
-    return Questions.find({});
+    if (isUserAdmin.call(this)) {
+      return Questions.find({});
+    } else {
+      this.stop();
+      return;
+    }
   });
 
   Meteor.publish('question', function questionPublication(questionId) {
-    return Questions.find(questionId);
+    const question = Questions.findOne(questionId);
+    if (question.status === 'approved' || isUserAdmin.call(this)) {
+      return Questions.find(questionId);
+    } else {
+      this.stop();
+      return;
+    }
+
   });
 }
 
@@ -23,9 +40,9 @@ Meteor.methods({
     check(title, String);
     check(content, String);
 
-    // if (!this.userId) {
-    //   throw new Meteor.Error('not-authorized');
-    // }
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
 
     Questions.insert({
       createdAt: new Date(),
@@ -39,18 +56,21 @@ Meteor.methods({
   'questions.remove'(questionId) {
     check(questionId, String);
 
-    Questions.remove(questionId);
+    if (isUserAdmin.call(this)) {
+      Questions.remove(questionId);
+    } else {
+      throw new Meteor.Error('not-authorized');
+    }
   },
 
   'questions.setStatus'(questionId, newStatus) {
     check(questionId, String);
     check(newStatus, String);
 
-    // const task = Tasks.findOne(taskId);
-    // if (task.private && task.owner !== this.userId) {
-    //   throw new Meteor.Error('not-authorized');
-    // }
-
-    Questions.update(questionId, { $set: { status: newStatus } });
+    if (isUserAdmin.call(this)) {
+      Questions.update(questionId, { $set: { status: newStatus } });
+    } else {
+      throw new Meteor.Error('not-authorized');
+    }
   }
 });
