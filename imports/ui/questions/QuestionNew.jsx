@@ -23,9 +23,7 @@ export default class QuestionNew extends React.Component {
         </ul>
 
         <QuestionForm onSubmit={this.onSubmit.bind(this)} />
-
       </div>
-
     );
   }
 }

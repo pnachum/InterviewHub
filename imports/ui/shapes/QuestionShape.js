@@ -5,6 +5,6 @@ export default PropTypes.shape({
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  // userId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   createdAt: PropTypes.object.isRequired,
 });

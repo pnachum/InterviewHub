@@ -17,16 +17,30 @@ Meteor.startup(() => {
   ReactDOM.render((
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <Route path="admin" component={AdminApp} >
+        <Route path="admin" component={AdminApp} onEnter={requireAdmin}>
           <IndexRoute component={AdminQuestions} />
         </Route>
 
         <Route path="" component={QuestionApp}>
           <IndexRoute component={QuestionIndex} />
-          <Route path="new" component={QuestionNew} />
+          <Route path="new" component={QuestionNew} onEnter={requireAuth} />
           <Route path=":id" component={QuestionShow} />
         </Route>
       </Route>
     </Router>
   ), document.getElementById('root'));
 });
+
+function requireAuth(nextState, replace) {
+  if (!Meteor.userId()) {
+    replace({
+      pathname: '/',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+}
+
+function requireAdmin(nextState, replace) {
+  {/* TODO: Change to actually require admin credentials */}
+  requireAuth(...arguments);
+}

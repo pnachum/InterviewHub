@@ -30,6 +30,7 @@ Meteor.methods({
     Questions.insert({
       createdAt: new Date(),
       status: 'pending',
+      userId: this.userId,
       title,
       content,
     });
