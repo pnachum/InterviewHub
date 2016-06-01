@@ -63,14 +63,14 @@ Meteor.methods({
     }
   },
 
-  'questions.setStatus'(questionId, newStatus) {
+  'questions.update'(questionId, data) {
     check(questionId, String);
-    check(newStatus, String);
+    check(data, Object);
 
     if (isUserAdmin.call(this)) {
-      Questions.update(questionId, { $set: { status: newStatus } });
+      Questions.update(questionId, { $set: data });
     } else {
       throw new Meteor.Error('not-authorized');
     }
-  }
+  },
 });

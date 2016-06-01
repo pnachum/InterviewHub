@@ -4,6 +4,9 @@ import { Button } from 'react-bootstrap';
 
 const propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  // Pre-populate the form if these are specified
+  content: PropTypes.string,
+  title: PropTypes.string,
 };
 
 function isValid(title, content) {
@@ -14,10 +17,10 @@ export default class QuestionForm extends React.Component {
 
   constructor(props) {
     super(props);
-
+    const { content, title } = props;
     this.state = {
-      title: '',
-      content: '',
+      title: title || '',
+      content: content || '',
     };
 
     this.onContentChange = this.onContentChange.bind(this);

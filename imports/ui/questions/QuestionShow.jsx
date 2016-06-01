@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import Markdown from 'react-remarkable';
 import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
-import { Button, Glyphicon } from 'react-bootstrap';
+import QuestionForm from './QuestionForm';
+import QuestionContent from './QuestionContent';
 
 const propTypes = {
   question: QuestionShape.isRequired,
@@ -12,6 +12,17 @@ const propTypes = {
 };
 
 class QuestionShow extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isEditing: false,
+    };
+
+    this.edit = this.edit.bind(this);
+    this.doneEditing = this.doneEditing.bind(this);
+  }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     const { isAdmin, question } = this.props;
@@ -30,26 +41,38 @@ class QuestionShow extends React.Component {
     this.transitionToIndex();
   }
 
+  edit() {
+    this.setState({ isEditing: true });
+  }
+
+  doneEditing(question, data) {
+    Meteor.call('questions.update', question._id, data);
+    this.setState({ isEditing: false });
+  }
+
   render() {
     const { question, isAdmin } = this.props;
-    if (question != null) {
-      return (
-        <div>
-          <h2>{question.title}</h2>
-          {isAdmin && (
-            <Button
-              bsStyle="danger"
-              onClick={() => this.deleteQuestion(question._id)}
-            >
-              <Glyphicon glyph="trash" />
-            </Button>
-          )}
-          <div>
-            <Markdown source={question.content} />
-          </div>
 
-        </div>
-      );
+    if (question != null) {
+      const { content, title } = question;
+      if (this.state.isEditing) {
+        return (
+          <QuestionForm
+            onSubmit={(data) => this.doneEditing(question, data)}
+            content={content}
+            title={title}
+          />
+        );
+      } else {
+        return (
+          <QuestionContent
+            question={question}
+            onDelete={this.deleteQuestion}
+            onEdit={this.edit}
+            canEdit={isAdmin}
+          />
+        );
+      }
     } else {
       return <div>Loading...</div>
     }

@@ -31,7 +31,7 @@ class AdminQuestions extends React.Component {
   }
 
   updateQuestionStatus(question, status) {
-    Meteor.call('questions.setStatus', question._id, status);
+    Meteor.call('questions.update', question._id, { status });
   }
 
   render() {
