@@ -4,6 +4,7 @@ import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 const propTypes = {
   question: QuestionShape.isRequired,
@@ -16,19 +17,37 @@ class QuestionShow extends React.Component {
     const { isAdmin, question } = this.props;
     // When an admin is on this page and logs out
     if (!isAdmin && (question == null || question.status !== 'approved')) {
-      this.context.router.push('/');
+      this.transitionToIndex();
     }
   }
 
+  transitionToIndex() {
+    this.context.router.push('/');
+  }
+
+  deleteQuestion(questionId) {
+    Meteor.call('questions.remove', questionId);
+    this.transitionToIndex();
+  }
+
   render() {
-    const { question } = this.props;
+    const { question, isAdmin } = this.props;
     if (question != null) {
       return (
         <div>
           <h2>{question.title}</h2>
+          {isAdmin && (
+            <Button
+              bsStyle="danger"
+              onClick={() => this.deleteQuestion(question._id)}
+            >
+              <Glyphicon glyph="trash" />
+            </Button>
+          )}
           <div>
             <Markdown source={question.content} />
           </div>
+
         </div>
       );
     } else {
