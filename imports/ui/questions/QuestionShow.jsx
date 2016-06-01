@@ -4,21 +4,21 @@ import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
+import UserShape from '../shapes/UserShape';
 
 const propTypes = {
   question: QuestionShape.isRequired,
-  isCurrentUserAdmin: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 class QuestionShow extends React.Component {
 
-  // TODO: This needs to redirect back to index for non-admin users when the question is not
-  // approved
-  componentWillMount() {
-    // const { question, isCurrentUserAdmin, history } = this.props;
-    // if (question.status !== 'approved' && !isCurrentUserAdmin) {
-    //   history.push('/');
-    // }
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    const { isLoggedIn, question } = this.props;
+    // When a user is on this page and logs out
+    if (!isLoggedIn && question.status !== 'approved') {
+      this.context.router.push('/');
+    }
   }
 
   render() {
@@ -38,11 +38,21 @@ class QuestionShow extends React.Component {
   }
 }
 
-export default createContainer(({ params }) => {
-  Meteor.subscribe('question', params.id);
-  return {
-    question: Questions.findOne(params.id),
-    // TODO: Fix this once admin stuff is set up
-    isCurrentUserAdmin: Meteor.userId(),
-  };
+QuestionShow.contextTypes = {
+  router: PropTypes.object,
+};
+
+export default createContainer((props) => {
+  const id = props.params.id;
+  Meteor.subscribe('question', id);
+  return Object.assign(
+    {
+      question: Questions.findOne(id),
+      // For some reason, using context like in QuestionNew and AdminApp to access user doesn't
+      // trigger componentDidUpdate when the user logs out. So handle it here instead.
+      isLoggedIn: !!Meteor.userId(),
+    },
+    // Pass through everything that came from the router
+    props
+  );
 }, QuestionShow);

@@ -2,13 +2,21 @@ import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
 import QuestionForm from './QuestionForm';
 import { Link } from 'react-router';
+import UserShape from '../shapes/UserShape';
 
 export default class QuestionNew extends React.Component {
+
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    // When a user is on this page and logs out
+    if (!this.context.user) {
+      this.context.router.push('/');
+    }
+  }
 
   onSubmit(questionData) {
     Meteor.call('questions.insert', questionData);
     alert("Thanks for submitting your question! It's awaiting approval.");
-    this.props.history.push('/');
+    this.context.router.push('/');
   }
 
   render() {
@@ -27,3 +35,8 @@ export default class QuestionNew extends React.Component {
     );
   }
 }
+
+QuestionNew.contextTypes = {
+  router: PropTypes.object,
+  user: UserShape,
+};
