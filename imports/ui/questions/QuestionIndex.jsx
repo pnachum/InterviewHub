@@ -8,28 +8,20 @@ const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,
 };
 
-class QuestionIndex extends React.Component {
-
-  render() {
-    const { questions } = this.props;
-    return (
-      <div>
-        <ul>
-          {
-            questions.map((question) => {
-              return (
-                <li key={question._id}>
-                  <Link to={`/${question._id}`}>
-                    {question.title}
-                  </Link>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </div>
-    );
-  }
+function QuestionIndex({ questions }) {
+  return (
+    <div>
+      <ul>
+        {questions.map(({ _id, title }) => {
+          return (
+            <li key={_id}>
+              <Link to={`/${_id}`}>{title}</Link>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
 
 QuestionIndex.propTypes = propTypes;

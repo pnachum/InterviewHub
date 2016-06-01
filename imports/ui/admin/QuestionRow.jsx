@@ -5,23 +5,32 @@ import { Button, Glyphicon } from 'react-bootstrap';
 
 const propTypes = {
   question: QuestionShape,
+  onDelete: PropTypes.func.isRequired,
+  onApprove: PropTypes.func.isRequired,
+  onReject: PropTypes.func.isRequired,
 };
 
-export default function QuestionRow({ question, onDelete, onApprove, onReject }) {
+export default function QuestionRow({
+  question,
+  onDelete,
+  onApprove,
+  onReject
+}) {
+  const { _id, title, status } = question;
   return (
     <tr>
       <td>
-        <Link to={`/${question._id}`}>{question.title}</Link>
+        <Link to={`/${_id}`}>{title}</Link>
       </td>
 
       <td>
-        {question.status}
+        {status}
       </td>
 
       <td>
         <Button
           bsStyle="success"
-          disabled={question.status === 'approved'}
+          disabled={status === 'approved'}
           onClick={onApprove}
         >
           <Glyphicon glyph="ok" />
@@ -29,7 +38,7 @@ export default function QuestionRow({ question, onDelete, onApprove, onReject })
 
         <Button
           bsStyle="success"
-          disabled={question.status === 'rejected'}
+          disabled={status === 'rejected'}
           onClick={onReject}
         >
           <Glyphicon glyph="remove" />

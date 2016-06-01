@@ -3,9 +3,10 @@ import React, { PropTypes } from 'react';
 export default class AdminApp extends React.Component {
 
   componentDidUpdate(prevProps, prevState, prevContext) {
+    const { isAdmin, router } = this.context;
     // When an admin is on this page and logs out
-    if (!this.context.isAdmin) {
-      this.context.router.push('/');
+    if (!isAdmin) {
+      router.push('/');
     }
   }
 

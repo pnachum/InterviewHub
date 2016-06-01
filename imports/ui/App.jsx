@@ -15,13 +15,13 @@ class App extends React.Component {
     const id = user ? user._id : null;
     const isLoggedIn = !!id;
     return {
+      // Gross global reference to Roles from alanning/meteor-roles
       isAdmin: isLoggedIn && Roles.userIsInRole(id, ['admin']),
       isLoggedIn,
     };
   }
 
   render() {
-    const { user } = this.props;
     return (
       <div>
         <Navbar />

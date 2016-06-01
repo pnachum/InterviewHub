@@ -16,7 +16,6 @@ class AdminQuestions extends React.Component {
 
     this.onApprove = this.onApprove.bind(this);
     this.onReject = this.onReject.bind(this);
-    this.onDelete = this.onDelete.bind(this);
   }
 
   onDelete(question) {

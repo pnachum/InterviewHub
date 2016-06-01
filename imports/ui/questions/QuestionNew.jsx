@@ -6,9 +6,10 @@ import { Link } from 'react-router';
 export default class QuestionNew extends React.Component {
 
   componentDidUpdate(prevProps, prevState, prevContext) {
+    const { isLoggedIn, router } = this.context;
     // When a user is on this page and logs out
-    if (!this.context.isLoggedIn) {
-      this.context.router.push('/');
+    if (!isLoggedIn) {
+      router.push('/');
     }
   }
 
