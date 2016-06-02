@@ -21,6 +21,7 @@ class QuestionShow extends React.Component {
     };
 
     this.edit = this.edit.bind(this);
+    this.deleteQuestion = this.deleteQuestion.bind(this);
     this.doneEditing = this.doneEditing.bind(this);
   }
 
