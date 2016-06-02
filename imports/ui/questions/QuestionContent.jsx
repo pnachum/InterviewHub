@@ -1,12 +1,24 @@
 import React, { PropTypes } from 'react';
 import QuestionShape from '../shapes/QuestionShape';
 import Markdown from 'react-remarkable';
+import SolutionShape from '../shapes/SolutionShape';
+import SolutionsList from './SolutionsList';
 
 const propTypes = {
   question: QuestionShape.isRequired,
+  solutions: PropTypes.arrayOf(SolutionShape).isRequired,
+  onSolutionSubmit: PropTypes.func,
 };
 
-export default function QuestionContent({ question }) {
+const defaultProps = {
+  onSolutionSubmit: () => {},
+};
+
+export default function QuestionContent({
+  question,
+  solutions,
+  onSolutionSubmit,
+}) {
   const { title, content } = question;
 
   return (
@@ -15,6 +27,11 @@ export default function QuestionContent({ question }) {
       <div>
         <Markdown source={content} />
       </div>
+
+      <SolutionsList
+        solutions={solutions}
+        onSubmit={onSolutionSubmit}
+      />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import QuestionShape from '../shapes/QuestionShape';
+import SolutionShape from '../shapes/SolutionShape';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Questions } from '../../api/questions/questions.js';
+import { Questions, Solutions } from '../../api/questions/questions';
 import { Meteor } from 'meteor/meteor';
 import QuestionForm from './QuestionForm';
 import QuestionContent from './QuestionContent';
@@ -9,16 +10,19 @@ import LoadingIcon from '../shared/LoadingIcon';
 import { DeleteButton, EditButton } from '../shared/Buttons';
 
 const propTypes = {
-  question: QuestionShape.isRequired,
+  question: QuestionShape,
+  solutions: PropTypes.arrayOf(SolutionShape).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   deleteQuestion: PropTypes.func,
   updateQuestion: PropTypes.func,
-  isLoading: PropTypes.bool.isRequired,
+  submitSolution: PropTypes.func,
+  isLoadingQuestion: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
   deleteQuestion: () => {},
   updateQuestion: () => {},
+  submitSolution: () => {},
 };
 
 class QuestionShow extends React.Component {
@@ -62,9 +66,15 @@ class QuestionShow extends React.Component {
   }
 
   render() {
-    const { question, isAdmin, isLoading } = this.props;
+    const {
+      question,
+      solutions,
+      isAdmin,
+      isLoadingQuestion,
+      submitSolution,
+    } = this.props;
 
-    if (isLoading) {
+    if (isLoadingQuestion) {
       return <LoadingIcon />;
     } else {
       const { content, title } = question;
@@ -85,7 +95,11 @@ class QuestionShow extends React.Component {
                 <EditButton onClick={this.edit} />
               </div>
             )}
-            <QuestionContent question={question} />
+            <QuestionContent
+              question={question}
+              solutions={solutions}
+              onSolutionSubmit={(content) => submitSolution(question._id, content)}
+            />
           </div>
         );
       }
@@ -103,14 +117,19 @@ QuestionShow.contextTypes = {
 export default createContainer((props) => {
   const id = props.params.id;
   const questionHandle = Meteor.subscribe('question', id);
-  const isLoading = !questionHandle.ready();
+  const isLoadingQuestion = !questionHandle.ready();
+  Meteor.subscribe('solutions.forQuestion', id);
+  const question = Questions.findOne(id);
+  const solutions = Solutions.find({ questionId: id }).fetch();
   const userId = Meteor.userId();
   return Object.assign(
     {
-      question: Questions.findOne(id),
       deleteQuestion: questionId => Meteor.call('questions.remove', questionId),
       updateQuestion: (questionId, data) => Meteor.call('questions.update', questionId, data),
-      isLoading,
+      submitSolution: (questionId, content) => Meteor.call('solutions.insert', questionId, content),
+      solutions,
+      isLoadingQuestion,
+      question,
       // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
       // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
       // instead, which unfortunately duplicates the logic

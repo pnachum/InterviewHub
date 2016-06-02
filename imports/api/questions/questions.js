@@ -3,6 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 
 export const Questions = new Mongo.Collection('Questions');
+// TODO: Figure out why Solutions and associated publications/methods can't be in another file
+export const Solutions = new Mongo.Collection('Solutions');
 
 function isUserAdmin(userId) {
   // Shitty global refernce to alanning/meteor-roles
@@ -31,7 +33,15 @@ if (Meteor.isServer) {
       this.stop();
       return;
     }
+  });
 
+  Meteor.publish('solutions.forQuestion', function solutionsForQuestions(questionId) {
+    const question = Questions.findOne(questionId);
+    if (question.status === 'approved' || isUserAdmin.call(this)) {
+      return Solutions.find({ questionId });
+    } else {
+      this.stop();
+    }
   });
 }
 
@@ -72,5 +82,20 @@ Meteor.methods({
     } else {
       throw new Meteor.Error('not-authorized');
     }
+  },
+
+  'solutions.insert'(questionId, content) {
+    check(questionId, String);
+    check(content, String);
+    if (!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    const solutionId = Solutions.insert({
+      createdAt: new Date(),
+      userId: this.userId,
+      questionId,
+      content,
+    });
   },
 });
