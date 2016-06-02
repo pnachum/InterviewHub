@@ -37,8 +37,10 @@ App.childContextTypes = {
   isAdmin: PropTypes.bool,
 };
 
-export default createContainer(() => {
-  return {
-    user: Meteor.user(),
-  };
+export default createContainer((props) => {
+  return Object.assign(
+    { user: Meteor.user() },
+    // Pass through everything that came from the router
+    props
+  );
 }, App);

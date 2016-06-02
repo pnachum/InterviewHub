@@ -26,9 +26,11 @@ function QuestionIndex({ questions }) {
 
 QuestionIndex.propTypes = propTypes;
 
-export default createContainer(() => {
+export default createContainer((props) => {
   Meteor.subscribe('questions.approved');
-  return {
-    questions: Questions.find({ status: 'approved' }).fetch(),
-  };
+  return Object.assign(
+    { questions: Questions.find({ status: 'approved' }).fetch() },
+    // Pass through everything that came from the router
+    props
+  );
 }, QuestionIndex);
