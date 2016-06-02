@@ -9,6 +9,8 @@ import QuestionContent from './QuestionContent';
 const propTypes = {
   question: QuestionShape.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  deleteQuestion: PropTypes.func.isRequired,
+  updateQuestion: PropTypes.func.isRequired,
 };
 
 class QuestionShow extends React.Component {
@@ -22,7 +24,7 @@ class QuestionShow extends React.Component {
 
     this.edit = this.edit.bind(this);
     this.deleteQuestion = this.deleteQuestion.bind(this);
-    this.doneEditing = this.doneEditing.bind(this);
+    this.updateQuestion = this.updateQuestion.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
@@ -38,7 +40,7 @@ class QuestionShow extends React.Component {
   }
 
   deleteQuestion(questionId) {
-    Meteor.call('questions.remove', questionId);
+    this.props.deleteQuestion(questionId);
     this.transitionToIndex();
   }
 
@@ -46,8 +48,8 @@ class QuestionShow extends React.Component {
     this.setState({ isEditing: true });
   }
 
-  doneEditing(question, data) {
-    Meteor.call('questions.update', question._id, data);
+  updateQuestion(question, data) {
+    this.props.updateQuestion(question._id, data);
     this.setState({ isEditing: false });
   }
 
@@ -59,7 +61,7 @@ class QuestionShow extends React.Component {
       if (this.state.isEditing) {
         return (
           <QuestionForm
-            onSubmit={(data) => this.doneEditing(question, data)}
+            onSubmit={(data) => this.updateQuestion(question, data)}
             content={content}
             title={title}
           />
@@ -91,6 +93,8 @@ export default createContainer((props) => {
   return Object.assign(
     {
       question: Questions.findOne(id),
+      deleteQuestion: questionId => Meteor.call('questions.remove', questionId),
+      updateQuestion: (questionId, data) => Meteor.call('questions.update', questionId, data),
       // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
       // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
       // instead, which unfortunately duplicates the logic

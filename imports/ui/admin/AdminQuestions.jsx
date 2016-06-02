@@ -7,45 +7,23 @@ import { Meteor } from 'meteor/meteor';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,
+  deleteQuestion: PropTypes.func.isRequired,
+  updateQuestionStatus: PropTypes.func.isRequired,
 };
 
-class AdminQuestions extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.onApprove = this.onApprove.bind(this);
-    this.onReject = this.onReject.bind(this);
-  }
-
-  onDelete(question) {
-    Meteor.call('questions.remove', question._id);
-  }
-
-  onApprove(question) {
-    this.updateQuestionStatus(question, 'approved');
-  }
-
-  onReject(question) {
-    this.updateQuestionStatus(question, 'rejected');
-  }
-
-  updateQuestionStatus(question, status) {
-    Meteor.call('questions.update', question._id, { status });
-  }
-
-  render() {
-    const { questions } = this.props;
-
-    return (
-      <AdminQuestionsTable
-        questions={questions}
-        onDelete={this.onDelete}
-        onApprove={this.onApprove}
-        onReject={this.onReject}
-      />
-    );
-  }
+function AdminQuestions({
+  questions,
+  deleteQuestion,
+  updateQuestionStatus,
+}) {
+  return (
+    <AdminQuestionsTable
+      questions={questions}
+      onDelete={(question) => deleteQuestion(question._id)}
+      onApprove={(question) => updateQuestionStatus(question._id, 'approved')}
+      onReject={(question) => updateQuestionStatus(question._id, 'rejected')}
+    />
+  );
 }
 
 AdminQuestions.propTypes = propTypes;
@@ -54,5 +32,7 @@ export default createContainer(() => {
   Meteor.subscribe('questions.all');
   return {
     questions: Questions.find({}).fetch(),
+    deleteQuestion: (id) => Meteor.call('questions.remove', id),
+    updateQuestionStatus: (id, status) => Meteor.call('questions.update', id, { status }),
   };
 }, AdminQuestions);
