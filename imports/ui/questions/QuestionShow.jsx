@@ -5,12 +5,19 @@ import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
 import QuestionForm from './QuestionForm';
 import QuestionContent from './QuestionContent';
+import LoadingIcon from '../shared/LoadingIcon';
 
 const propTypes = {
   question: QuestionShape.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  deleteQuestion: PropTypes.func.isRequired,
-  updateQuestion: PropTypes.func.isRequired,
+  deleteQuestion: PropTypes.func,
+  updateQuestion: PropTypes.func,
+  isLoading: PropTypes.bool.isRequired,
+};
+
+const defaultProps = {
+  deleteQuestion: () => {},
+  updateQuestion: () => {},
 };
 
 class QuestionShow extends React.Component {
@@ -54,9 +61,11 @@ class QuestionShow extends React.Component {
   }
 
   render() {
-    const { question, isAdmin } = this.props;
+    const { question, isAdmin, isLoading } = this.props;
 
-    if (question != null) {
+    if (isLoading) {
+      return <LoadingIcon />;
+    } else {
       const { content, title } = question;
       if (this.state.isEditing) {
         return (
@@ -76,11 +85,12 @@ class QuestionShow extends React.Component {
           />
         );
       }
-    } else {
-      return <div>Loading...</div>
     }
   }
 }
+
+QuestionShow.propTypes = propTypes;
+QuestionShow.defaultProps = defaultProps;
 
 QuestionShow.contextTypes = {
   router: PropTypes.object,
@@ -88,13 +98,15 @@ QuestionShow.contextTypes = {
 
 export default createContainer((props) => {
   const id = props.params.id;
-  Meteor.subscribe('question', id);
+  const questionHandle = Meteor.subscribe('question', id);
+  const isLoading = !questionHandle.ready();
   const userId = Meteor.userId();
   return Object.assign(
     {
       question: Questions.findOne(id),
       deleteQuestion: questionId => Meteor.call('questions.remove', questionId),
       updateQuestion: (questionId, data) => Meteor.call('questions.update', questionId, data),
+      isLoading,
       // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
       // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
       // instead, which unfortunately duplicates the logic

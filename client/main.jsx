@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import App from '../imports/ui/App.jsx';
+import App from '../imports/ui/shared/App.jsx';
 import AdminApp from '../imports/ui/admin/AdminApp';
 import AdminQuestions from '../imports/ui/admin/AdminQuestions';
 
