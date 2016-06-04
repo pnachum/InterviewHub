@@ -3,14 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import App from '../imports/ui/shared/App.jsx';
-import AdminApp from '../imports/ui/admin/AdminApp';
-import AdminQuestions from '../imports/ui/admin/AdminQuestions';
+import App from '../imports/ui/pages/App.jsx';
+import AdminApp from '../imports/ui/pages/AdminApp';
+import AdminQuestions from '../imports/ui/pages/AdminQuestions';
 
-import QuestionIndex from '../imports/ui/questions/QuestionIndex';
-import QuestionShow from '../imports/ui/questions/QuestionShow';
-import QuestionNew from '../imports/ui/questions/QuestionNew';
-import QuestionApp from '../imports/ui/questions/QuestionApp';
+import QuestionIndex from '../imports/ui/pages/QuestionIndex';
+import QuestionShow from '../imports/ui/pages/QuestionShow';
+import QuestionNew from '../imports/ui/pages/QuestionNew';
+import QuestionApp from '../imports/ui/pages/QuestionApp';
 
 Meteor.startup(() => {
   ReactDOM.render((

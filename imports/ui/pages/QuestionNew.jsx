@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
-import QuestionForm from './QuestionForm';
+import QuestionForm from '../questions/QuestionForm';
 import { Link } from 'react-router';
 
 export default class QuestionNew extends React.Component {

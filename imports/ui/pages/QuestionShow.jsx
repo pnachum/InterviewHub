@@ -3,8 +3,8 @@ import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
-import QuestionForm from './QuestionForm';
-import QuestionContent from './QuestionContent';
+import QuestionForm from '../questions/QuestionForm';
+import QuestionContent from '../questions/QuestionContent';
 import LoadingIcon from '../shared/LoadingIcon';
 import { DeleteButton, EditButton } from '../shared/Buttons';
 

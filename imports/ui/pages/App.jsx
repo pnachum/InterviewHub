@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Navbar from './Navbar';
+import Navbar from '../shared/Navbar';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import UserShape from '../shapes/UserShape';

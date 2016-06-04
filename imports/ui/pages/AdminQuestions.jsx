@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import AdminQuestionsTable from './AdminQuestionsTable';
+import AdminQuestionsTable from '../admin/AdminQuestionsTable';
 import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
