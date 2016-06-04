@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import QuestionForm from './QuestionForm';
 import QuestionContent from './QuestionContent';
 import LoadingIcon from '../shared/LoadingIcon';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 const propTypes = {
   question: QuestionShape.isRequired,
@@ -46,8 +47,8 @@ class QuestionShow extends React.Component {
     this.context.router.push('/');
   }
 
-  deleteQuestion(questionId) {
-    this.props.deleteQuestion(questionId);
+  deleteQuestion() {
+    this.props.deleteQuestion(this.props.question._id);
     this.transitionToIndex();
   }
 
@@ -77,12 +78,26 @@ class QuestionShow extends React.Component {
         );
       } else {
         return (
-          <QuestionContent
-            question={question}
-            onDelete={this.deleteQuestion}
-            onEdit={this.edit}
-            canEdit={isAdmin}
-          />
+          <div>
+            {isAdmin && (
+              <div>
+                <Button
+                  bsStyle="danger"
+                  onClick={this.deleteQuestion}
+                >
+                  <Glyphicon glyph="trash" />
+                </Button>
+
+                <Button
+                  bsStyle="warning"
+                  onClick={this.edit}
+                >
+                  <Glyphicon glyph="pencil" />
+                </Button>
+              </div>
+            )}
+            <QuestionContent question={question} />
+          </div>
         );
       }
     }
