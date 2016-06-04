@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import QuestionForm from './QuestionForm';
 import QuestionContent from './QuestionContent';
 import LoadingIcon from '../shared/LoadingIcon';
-import { Button, Glyphicon } from 'react-bootstrap';
+import { DeleteButton, EditButton } from '../shared/Buttons';
 
 const propTypes = {
   question: QuestionShape.isRequired,
@@ -81,19 +81,8 @@ class QuestionShow extends React.Component {
           <div>
             {isAdmin && (
               <div>
-                <Button
-                  bsStyle="danger"
-                  onClick={this.deleteQuestion}
-                >
-                  <Glyphicon glyph="trash" />
-                </Button>
-
-                <Button
-                  bsStyle="warning"
-                  onClick={this.edit}
-                >
-                  <Glyphicon glyph="pencil" />
-                </Button>
+                <DeleteButton onClick={this.deleteQuestion} />
+                <EditButton onClick={this.edit} />
               </div>
             )}
             <QuestionContent question={question} />

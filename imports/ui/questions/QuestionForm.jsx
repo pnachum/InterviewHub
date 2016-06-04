@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import MarkdownEditor from './MarkdownEditor';
-import { Button } from 'react-bootstrap';
+import { SubmitButton } from '../shared/Buttons';
 
 const propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -63,15 +63,10 @@ export default class QuestionForm extends React.Component {
           />
         </div>
 
-
-        <Button
-          bsStyle="success"
+        <SubmitButton
           onClick={this.onSubmit}
           disabled={!isValid(title, content)}
-        >
-          Submit
-        </Button>
-
+        />
       </div>
     );
   }
