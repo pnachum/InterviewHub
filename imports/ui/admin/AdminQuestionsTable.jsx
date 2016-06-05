@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
-import QuestionRow from './QuestionRow';
 import QuestionShape from '../shapes/QuestionShape';
-import { Table } from 'react-bootstrap';
+import QuestionsTable from '../shared/QuestionsTable';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape),
@@ -17,24 +16,15 @@ export default function AdminQuestionsTable({
   onDelete,
 }) {
   return (
-    <Table responsive hover>
-      <thead>
-      </thead>
-
-      <tbody>
-        {questions.map((question) => {
-          return (
-            <QuestionRow
-              question={question}
-              key={question._id}
-              onDelete={(e) => onDelete(question)}
-              onApprove={(e) => onApprove(question)}
-              onReject={(e) => onReject(question)}
-            />
-          );
-        })}
-      </tbody>
-    </Table>
+    <QuestionsTable
+      questions={questions}
+      onDelete={onDelete}
+      onApprove={onApprove}
+      onReject={onReject}
+      hasStatusColumn
+      hasApprovalColumn
+      hasDeleteColumn
+    />
   );
 }
 

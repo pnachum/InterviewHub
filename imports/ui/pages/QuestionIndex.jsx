@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import QuestionShape from '../shapes/QuestionShape';
 import LoadingIcon from '../shared/LoadingIcon';
+import QuestionsTable from '../shared/QuestionsTable';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,
@@ -15,17 +16,7 @@ function QuestionIndex({ questions, isLoading }) {
     return <LoadingIcon />;
   } else {
     return (
-      <div>
-        <ul>
-          {questions.map(({ _id, title }) => {
-            return (
-              <li key={_id}>
-                <Link to={`/${_id}`}>{title}</Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <QuestionsTable questions={questions} />
     );
   }
 }

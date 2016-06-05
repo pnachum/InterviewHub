@@ -68,7 +68,6 @@ export function RejectButton(props) {
   );
 }
 
-
 [
   DeleteButton,
   SubmitButton,
