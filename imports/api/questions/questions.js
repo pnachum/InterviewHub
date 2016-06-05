@@ -26,9 +26,9 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('question', function questionPublication(questionId) {
-    const question = Questions.find(questionId);
+    const question = Questions.findOne(questionId);
     if (question.status === 'approved' || isUserAdmin(this.userId)) {
-      return question;
+      return Questions.find(questionId);
     } else {
       this.stop();
       return;
