@@ -26,7 +26,6 @@ export default class QuestionForm extends React.Component {
 
     this.onContentChange = this.onContentChange.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onContentChange(e) {
@@ -37,12 +36,8 @@ export default class QuestionForm extends React.Component {
     this.setState({ title: e.target.value });
   }
 
-  onSubmit(e) {
-    const { title, content } = this.state;
-    this.props.onSubmit({ title, content });
-  }
-
   render() {
+    const { onSubmit } = this.props;
     const { isLoggedIn } = this.context;
     const { title, content } = this.state;
 
@@ -64,7 +59,7 @@ export default class QuestionForm extends React.Component {
         </div>
 
         <SubmitButton
-          onClick={this.onSubmit}
+          onClick={() => onSubmit({ title, content })}
           disabled={!canSubmit({ title, content, isLoggedIn })}
         />
         {!isLoggedIn && <div>You must be logged in to submit questions</div>}
