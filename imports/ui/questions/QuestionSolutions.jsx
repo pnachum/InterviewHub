@@ -37,6 +37,7 @@ export default class QuestionSolutions extends React.Component {
         <a href="#" onClick={this.toggleSolutions}>Toggle Solutions</a>
         {isShowingSolutions && (
           <div>
+            <hr />
             <SolutionsList solutions={solutions} />
 
             <p><strong>Submit a solution</strong></p>
