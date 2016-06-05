@@ -15,6 +15,7 @@ export default function MarkdownEditor({ value, onChange }) {
           onChange={onChange}
           cols={100}
           rows={10}
+          placeholder="Markdown available"
         />
       </div>
 
