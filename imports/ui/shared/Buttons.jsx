@@ -68,12 +68,21 @@ export function RejectButton(props) {
   );
 }
 
+export function LinkButton(props) {
+  return (
+    <Button bsStyle="link" {...props}>
+      {props.children}
+    </Button>
+  );
+}
+
 [
   DeleteButton,
   SubmitButton,
   ApproveButton,
   RejectButton,
   SubmitButton,
+  LinkButton,
 ].forEach(component => {
   component.propTypes = propTypes;
   component.defaultProps = defaultProps;

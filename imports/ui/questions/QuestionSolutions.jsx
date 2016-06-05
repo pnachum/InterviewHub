@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import SolutionShape from '../shapes/SolutionShape';
 import SolutionsList from './SolutionsList';
 import SolutionForm from './SolutionForm';
+import { LinkButton } from '../shared/Buttons';
 
 const propTypes = {
   solutions: PropTypes.arrayOf(SolutionShape).isRequired,
@@ -34,7 +35,9 @@ export default class QuestionSolutions extends React.Component {
     const { isShowingSolutions } = this.state;
     return (
       <div>
-        <a href="#" onClick={this.toggleSolutions}>Toggle Solutions</a>
+        <LinkButton onClick={this.toggleSolutions}>
+          Toggle Solutions
+        </LinkButton>
         {isShowingSolutions && (
           <div>
             <hr />
