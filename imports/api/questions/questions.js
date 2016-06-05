@@ -2,10 +2,27 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { isUserAdmin } from '../../helpers/Roles';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Questions = new Mongo.Collection('Questions');
+Questions.schema = new SimpleSchema({
+  title: { type: String },
+  content: { type: String },
+  status: { type: String, defaultValue: 'pending' },
+  userId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+  createdAt: { type: Date },
+});
+Questions.attachSchema(Questions.schema);
+
 // TODO: Figure out why Solutions and associated publications/methods can't be in another file
 export const Solutions = new Mongo.Collection('Solutions');
+Solutions.schema = new SimpleSchema({
+  content: { type: String },
+  userId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+  questionId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+  createdAt: { type: Date },
+});
+Solutions.attachSchema(Solutions.schema);
 
 if (Meteor.isServer) {
   Meteor.publish('questions.approved', function approvedQuestionsPublication() {
