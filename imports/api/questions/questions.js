@@ -23,7 +23,7 @@ if (Meteor.isServer) {
 
   Meteor.publishComposite('question', function(questionId) {
     return {
-      find: function() {
+      find() {
         const question = Questions.findOne(questionId);
         if (question.status === 'approved' || isUserAdmin(this.userId)) {
           return Questions.find(questionId);
@@ -33,14 +33,14 @@ if (Meteor.isServer) {
         }
       },
       children: [{
-        find: function(question) {
+        find(question) {
           if (question.status === 'approved' || isUserAdmin(this.userId)) {
             return Solutions.find({ questionId: question._id });
           } else {
             this.stop();
             return;
           }
-        }
+        },
       }],
     };
   });
@@ -92,7 +92,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    const solutionId = Solutions.insert({
+    Solutions.insert({
       createdAt: new Date(),
       userId: this.userId,
       questionId,
