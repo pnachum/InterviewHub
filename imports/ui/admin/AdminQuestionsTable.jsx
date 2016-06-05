@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import QuestionRow from './QuestionRow';
 import QuestionShape from '../shapes/QuestionShape';
+import { Table } from 'react-bootstrap';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape),
@@ -16,12 +17,8 @@ export default function AdminQuestionsTable({
   onDelete,
 }) {
   return (
-    <table className="table">
+    <Table responsive hover>
       <thead>
-        <tr>
-          <th>Question</th>
-          <th>Status</th>
-        </tr>
       </thead>
 
       <tbody>
@@ -37,7 +34,7 @@ export default function AdminQuestionsTable({
           );
         })}
       </tbody>
-    </table>
+    </Table>
   );
 }
 
