@@ -32,7 +32,6 @@ export default class QuestionSolutions extends React.Component {
   render() {
     const { solutions, onSolutionSubmit } = this.props;
     const { isShowingSolutions } = this.state;
-    const { isLoggedIn } = this.context;
     return (
       <div>
         <a href="#" onClick={this.toggleSolutions}>Toggle Solutions</a>
@@ -40,12 +39,8 @@ export default class QuestionSolutions extends React.Component {
           <div>
             <SolutionsList solutions={solutions} />
 
-            {isLoggedIn && (
-              <div>
-                <p><strong>Submit a solution</strong></p>
-                <SolutionForm onSubmit={onSolutionSubmit} />
-              </div>
-            )}
+            <p><strong>Submit a solution</strong></p>
+            <SolutionForm onSubmit={onSolutionSubmit} />
           </div>
         )}
       </div>
@@ -55,6 +50,3 @@ export default class QuestionSolutions extends React.Component {
 
 QuestionSolutions.propTypes = propTypes;
 QuestionSolutions.defaultProps = defaultProps;
-QuestionSolutions.contextTypes = {
-  isLoggedIn: PropTypes.bool,
-}

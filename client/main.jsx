@@ -22,22 +22,13 @@ Meteor.startup(() => {
 
         <Route path="" component={QuestionApp}>
           <IndexRoute component={QuestionIndex} />
-          <Route path="new" component={QuestionNew} onEnter={requireAuth} />
+          <Route path="new" component={QuestionNew} />
           <Route path=":id" component={QuestionShow} />
         </Route>
       </Route>
     </Router>
   ), document.getElementById('root'));
 });
-
-function requireAuth(nextState, replace) {
-  if (!Meteor.userId()) {
-    replace({
-      pathname: '/',
-      state: { nextPathname: nextState.location.pathname }
-    });
-  }
-}
 
 function requireAdmin(nextState, replace) {
   const id = Meteor.userId();

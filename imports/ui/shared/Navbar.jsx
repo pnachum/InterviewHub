@@ -8,7 +8,7 @@ export default function Navbar(props, { isLoggedIn, isAdmin }) {
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav">
           <li><Link to="/">All questions</Link></li>
-          {isLoggedIn && <li><Link to="/new">Submit question</Link></li>}
+          <li><Link to="/new">Submit question</Link></li>
           {isAdmin && <li><Link to="admin">Admin</Link></li>}
           <li><AccountsUIWrapper /></li>
           {/*<li><a href="#" {{action 'randomQuestion'}}>Random question</a></li>*/}

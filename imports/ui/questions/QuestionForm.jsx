@@ -9,8 +9,8 @@ const propTypes = {
   title: PropTypes.string,
 };
 
-function isValid(title, content) {
-  return title && title.length && content && content.length;
+function canSubmit({ title, content, isLoggedIn }) {
+  return isLoggedIn && title && title.length && content && content.length;
 }
 
 export default class QuestionForm extends React.Component {
@@ -42,6 +42,7 @@ export default class QuestionForm extends React.Component {
   }
 
   render() {
+    const { isLoggedIn } = this.context;
     const { title, content } = this.state;
 
     return (
@@ -65,11 +66,15 @@ export default class QuestionForm extends React.Component {
 
         <SubmitButton
           onClick={this.onSubmit}
-          disabled={!isValid(title, content)}
+          disabled={!canSubmit({ title, content, isLoggedIn })}
         />
+        {!isLoggedIn && <div>You must be logged in to submit questions</div>}
       </div>
     );
   }
 }
 
 QuestionForm.propTypes = propTypes;
+QuestionForm.contextTypes = {
+  isLoggedIn: PropTypes.bool,
+};

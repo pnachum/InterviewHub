@@ -32,6 +32,7 @@ export default class SolutionForm extends React.Component {
 
   render() {
     const { newContent } = this.state;
+    const { isLoggedIn } = this.context;
     return (
       <div>
         <div className="row">
@@ -42,9 +43,10 @@ export default class SolutionForm extends React.Component {
         </div>
 
         <SubmitButton
-          disabled={!newContent}
+          disabled={!newContent || !isLoggedIn}
           onClick={this.onSubmit}
         />
+        {!isLoggedIn && <div>You must be logged in to submit solutions</div>}
       </div>
     );
   }
@@ -52,3 +54,6 @@ export default class SolutionForm extends React.Component {
 
 SolutionForm.propTypes = propTypes;
 SolutionForm.defaultProps = defaultProps;
+SolutionForm.contextTypes = {
+  isLoggedIn: PropTypes.bool,
+}

@@ -5,14 +5,6 @@ import { Link } from 'react-router';
 
 export default class QuestionNew extends React.Component {
 
-  componentDidUpdate(prevProps, prevState, prevContext) {
-    const { isLoggedIn, router } = this.context;
-    // When a user is on this page and logs out
-    if (!isLoggedIn) {
-      router.push('/');
-    }
-  }
-
   onSubmit(questionData) {
     Meteor.call('questions.insert', questionData);
     alert("Thanks for submitting your question! It's awaiting approval.");
