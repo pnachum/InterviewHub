@@ -68,8 +68,14 @@ export function RejectButton(props) {
   );
 }
 
-DeleteButton.propTypes = propTypes;
-SubmitButton.propTypes = propTypes;
-ApproveButton.propTypes = propTypes;
-RejectButton.propTypes = propTypes;
-SubmitButton.propTypes = propTypes;
+
+[
+  DeleteButton,
+  SubmitButton,
+  ApproveButton,
+  RejectButton,
+  SubmitButton,
+].forEach(component => {
+  component.propTypes = propTypes;
+  component.defaultProps = defaultProps;
+});

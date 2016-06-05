@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 
-export default function Navbar(props, { isLoggedIn, isAdmin }) {
+export default function Navbar(props, { isAdmin }) {
   return (
     <nav className="navbar navbar-default">
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -19,6 +19,5 @@ export default function Navbar(props, { isLoggedIn, isAdmin }) {
 }
 
 Navbar.contextTypes = {
-  isLoggedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
 }
