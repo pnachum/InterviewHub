@@ -39,7 +39,7 @@ export default createContainer(() => {
   const questionsHandle = Meteor.subscribe('questions.all');
   const isLoading = !questionsHandle.ready();
   return {
-    questions: Questions.find({}).fetch(),
+    questions: Questions.find({}, { sort: { createdAt: -1 } }).fetch(),
     deleteQuestion: (id) => Meteor.call('questions.remove', id),
     updateQuestionStatus: (id, status) => Meteor.call('questions.update', id, { status }),
     isLoading,
