@@ -62,8 +62,8 @@ class QuestionShow extends React.Component {
     this.setState({ isEditing: true });
   }
 
-  updateQuestion(question, data) {
-    this.props.updateQuestion(question._id, data);
+  updateQuestion(data) {
+    this.props.updateQuestion(this.props.question._id, data);
     this.setState({ isEditing: false });
   }
 
@@ -76,14 +76,16 @@ class QuestionShow extends React.Component {
       submitSolution,
     } = this.props;
 
+    const { isEditing } = this.state;
+
     if (isLoading) {
       return <LoadingIcon />;
     } else {
       const { content, title } = question;
-      if (this.state.isEditing) {
+      if (isEditing) {
         return (
           <QuestionForm
-            onSubmit={(data) => this.updateQuestion(question, data)}
+            onSubmit={this.updateQuestion}
             content={content}
             title={title}
           />
