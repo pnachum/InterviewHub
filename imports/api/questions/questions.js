@@ -25,24 +25,28 @@ if (Meteor.isServer) {
     }
   });
 
-  Meteor.publish('question', function questionPublication(questionId) {
-    const question = Questions.findOne(questionId);
-    if (question.status === 'approved' || isUserAdmin(this.userId)) {
-      return Questions.find(questionId);
-    } else {
-      this.stop();
-      return;
-    }
-  });
-
-  Meteor.publish('solutions.forQuestion', function solutionsForQuestions(questionId) {
-    const question = Questions.findOne(questionId);
-    if (question.status === 'approved' || isUserAdmin(this.userId)) {
-      return Solutions.find({ questionId });
-    } else {
-      this.stop();
-      return;
-    }
+  Meteor.publishComposite('question', function(questionId) {
+    return {
+      find: function() {
+        const question = Questions.findOne(questionId);
+        if (question.status === 'approved' || isUserAdmin(this.userId)) {
+          return Questions.find(questionId);
+        } else {
+          this.stop();
+          return;
+        }
+      },
+      children: [{
+        find: function(question) {
+          if (question.status === 'approved' || isUserAdmin(this.userId)) {
+            return Solutions.find({ questionId: question._id });
+          } else {
+            this.stop();
+            return;
+          }
+        }
+      }],
+    };
   });
 }
 

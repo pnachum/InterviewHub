@@ -17,7 +17,7 @@ const propTypes = {
   deleteQuestion: PropTypes.func,
   updateQuestion: PropTypes.func,
   submitSolution: PropTypes.func,
-  isLoadingQuestion: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
@@ -71,11 +71,11 @@ class QuestionShow extends React.Component {
       question,
       solutions,
       isAdmin,
-      isLoadingQuestion,
+      isLoading,
       submitSolution,
     } = this.props;
 
-    if (isLoadingQuestion) {
+    if (isLoading) {
       return <LoadingIcon />;
     } else {
       const { content, title } = question;
@@ -119,8 +119,7 @@ QuestionShow.contextTypes = {
 export default createContainer((props) => {
   const id = props.params.id;
   const questionHandle = Meteor.subscribe('question', id);
-  const isLoadingQuestion = !questionHandle.ready();
-  Meteor.subscribe('solutions.forQuestion', id);
+  const isLoading = !questionHandle.ready();
   const question = Questions.findOne(id);
   const solutions = Solutions.find({ questionId: id }).fetch();
   const userId = Meteor.userId();
@@ -130,7 +129,7 @@ export default createContainer((props) => {
       updateQuestion: (questionId, data) => Meteor.call('questions.update', questionId, data),
       submitSolution: (questionId, content) => Meteor.call('solutions.insert', questionId, content),
       solutions,
-      isLoadingQuestion,
+      isLoading,
       question,
       // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
       // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
