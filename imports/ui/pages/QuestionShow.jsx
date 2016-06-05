@@ -10,6 +10,8 @@ import LoadingIcon from '../shared/LoadingIcon';
 import { DeleteButton, EditButton } from '../shared/Buttons';
 import QuestionSolutions from '../questions/QuestionSolutions';
 import { isUserAdmin } from '../../helpers/Roles';
+import { remove, update } from '../../api/questions/methods.js';
+import { insert } from '../../api/solutions/methods.js';
 
 const propTypes = {
   question: QuestionShape,
@@ -128,9 +130,9 @@ export default createContainer((props) => {
   const userId = Meteor.userId();
   return Object.assign(
     {
-      deleteQuestion: questionId => Meteor.call('questions.remove', questionId),
-      updateQuestion: (questionId, data) => Meteor.call('questions.update', questionId, data),
-      submitSolution: (questionId, content) => Meteor.call('solutions.insert', questionId, content),
+      deleteQuestion: questionId => remove.call({ questionId }),
+      updateQuestion: (questionId, data) => update.call({ questionId, data }),
+      submitSolution: (questionId, content) => insert.call({ questionId, content }),
       solutions,
       isLoading,
       question,

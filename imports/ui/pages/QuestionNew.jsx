@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
 import QuestionForm from '../questions/QuestionForm';
 import { Link } from 'react-router';
+import { insert } from '../../api/questions/methods.js';
 
 function onSubmit(questionData, isAdmin, router) {
-  Meteor.call('questions.insert', questionData);
+  insert.call(questionData);
   alert("Thanks for submitting your question! It's awaiting approval.");
   // Redirect admins to the admin page after submitting a question
   const route = isAdmin ? '/admin' : '/';
