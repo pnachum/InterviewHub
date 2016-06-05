@@ -41,8 +41,15 @@ function requireAuth(nextState, replace) {
 
 function requireAdmin(nextState, replace) {
   const id = Meteor.userId();
-  // Gross global reference to Roles from alanning/meteor-roles
-  if (!id || !Roles.userIsInRole(id, ['admin'])) {
+
+  // When an admin is on the admin page and refreshes the page, the app gets into a weird state
+  // where Meteor.userId() exists (because the user is logged in), but the user document hasn't
+  // been loaded, so Meteor.user() is undefined. In this state, the user fails Roles.userIsInRole(),
+  // because the user object doesn't exist. So this also checks that the user has been loaded
+  // before checking if they are an admin
+  const isNotAdmin = Meteor.user() && !Roles.userIsInRole(id, ['admin']);
+
+  if (!id || isNotAdmin) {
     replace({
       pathname: '/',
       state: { nextPathname: nextState.location.pathname }
