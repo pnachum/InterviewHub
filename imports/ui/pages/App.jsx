@@ -25,11 +25,19 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        {this.props.children}
+        <div style={styles.appContent}>
+          {this.props.children}
+        </div>
       </div>
     );
   }
 }
+
+const styles = {
+  appContent: {
+    margin: 10,
+  },
+};
 
 App.propTypes = propTypes;
 App.childContextTypes = {
