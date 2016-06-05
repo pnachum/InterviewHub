@@ -12,6 +12,8 @@ import QuestionShow from '../imports/ui/pages/QuestionShow';
 import QuestionNew from '../imports/ui/pages/QuestionNew';
 import QuestionApp from '../imports/ui/pages/QuestionApp';
 
+import { isUserAdmin } from '../imports/helpers/Roles';
+
 Meteor.startup(() => {
   ReactDOM.render((
     <Router history={browserHistory}>
@@ -38,7 +40,7 @@ function requireAdmin(nextState, replace) {
   // been loaded, so Meteor.user() is undefined. In this state, the user fails Roles.userIsInRole(),
   // because the user object doesn't exist. So this also checks that the user has been loaded
   // before checking if they are an admin
-  const isNotAdmin = Meteor.user() && !Roles.userIsInRole(id, ['admin']);
+  const isNotAdmin = Meteor.user() && !isUserAdmin(id);
 
   if (!id || isNotAdmin) {
     replace({

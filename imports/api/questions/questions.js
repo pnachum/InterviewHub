@@ -1,15 +1,11 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import { isUserAdmin } from '../../helpers/Roles';
 
 export const Questions = new Mongo.Collection('Questions');
 // TODO: Figure out why Solutions and associated publications/methods can't be in another file
 export const Solutions = new Mongo.Collection('Solutions');
-
-function isUserAdmin(userId) {
-  // Shitty global refernce to alanning/meteor-roles
-  return userId && Roles.userIsInRole(userId, ['admin']);
-}
 
 if (Meteor.isServer) {
   Meteor.publish('questions.approved', function approvedQuestionsPublication() {

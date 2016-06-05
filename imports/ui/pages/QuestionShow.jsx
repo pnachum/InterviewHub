@@ -9,6 +9,7 @@ import QuestionContent from '../questions/QuestionContent';
 import LoadingIcon from '../shared/LoadingIcon';
 import { DeleteButton, EditButton } from '../shared/Buttons';
 import QuestionSolutions from '../questions/QuestionSolutions';
+import { isUserAdmin } from '../../helpers/Roles';
 
 const propTypes = {
   question: QuestionShape,
@@ -131,10 +132,10 @@ export default createContainer((props) => {
       solutions,
       isLoading,
       question,
-      // For some reason, using context like in QuestionNew and AdminApp to access isLoggedIn and
+      // For some reason, using context like in QuestionNew and AdminApp to access
       // isAdmin doesn't trigger componentDidUpdate when the user logs out. So handle it here
       // instead, which unfortunately duplicates the logic
-      isAdmin: !!userId && Roles.userIsInRole(userId, ['admin']),
+      isAdmin: isUserAdmin(userId),
     },
     // Pass through everything that came from the router
     props

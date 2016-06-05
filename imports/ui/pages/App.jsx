@@ -3,6 +3,7 @@ import Navbar from '../shared/Navbar';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import UserShape from '../shapes/UserShape';
+import { isUserAdmin } from '../../helpers/Roles';
 
 const propTypes = {
   user: UserShape,
@@ -13,11 +14,9 @@ class App extends React.Component {
   getChildContext() {
     const user = this.props.user;
     const id = user ? user._id : null;
-    const isLoggedIn = !!id;
     return {
-      // Gross global reference to Roles from alanning/meteor-roles
-      isAdmin: isLoggedIn && Roles.userIsInRole(id, ['admin']),
-      isLoggedIn,
+      isAdmin: isUserAdmin(id),
+      isLoggedIn: !!id,
     };
   }
 
