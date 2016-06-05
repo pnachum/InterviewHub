@@ -5,6 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
 import LoadingIcon from '../shared/LoadingIcon';
+import { remove, update } from '../../api/questions/methods.js';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,
@@ -40,8 +41,8 @@ export default createContainer(() => {
   const isLoading = !questionsHandle.ready();
   return {
     questions: Questions.find({}, { sort: { createdAt: -1 } }).fetch(),
-    deleteQuestion: (id) => Meteor.call('questions.remove', id),
-    updateQuestionStatus: (id, status) => Meteor.call('questions.update', id, { status }),
+    deleteQuestion: (questionId) => remove.call({ questionId }),
+    updateQuestionStatus: (questionId, status) => update.call({ questionId, data: { status } }),
     isLoading,
   };
 }, AdminQuestions);
