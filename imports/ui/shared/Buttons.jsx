@@ -13,6 +13,7 @@ export function DeleteButton(props) {
   return (
     <Button
       bsStyle="danger"
+      title="Delete"
       {...props}
     >
       <Glyphicon glyph="trash" />
@@ -24,6 +25,7 @@ export function EditButton(props) {
   return (
     <Button
       bsStyle="warning"
+      title="Edit"
       {...props}
     >
       <Glyphicon glyph="pencil" />
@@ -52,8 +54,7 @@ export function SubmitButton(props) {
 
 export function ApproveButton(props) {
   return (
-    <GreenButton {...props}
-    >
+    <GreenButton {...props} title="Approve">
       <Glyphicon glyph="ok" />
     </GreenButton>
   );
@@ -61,8 +62,7 @@ export function ApproveButton(props) {
 
 export function RejectButton(props) {
   return (
-    <GreenButton {...props}
-    >
+    <GreenButton {...props} title="Reject">
       <Glyphicon glyph="remove" />
     </GreenButton>
   );
