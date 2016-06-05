@@ -6,9 +6,12 @@ import { Link } from 'react-router';
 export default class QuestionNew extends React.Component {
 
   onSubmit(questionData) {
+    const { isAdmin, router } = this.context;
     Meteor.call('questions.insert', questionData);
     alert("Thanks for submitting your question! It's awaiting approval.");
-    this.context.router.push('/');
+    // Redirect admins to the admin page after submitting a question
+    const route = isAdmin ? '/admin' : '/';
+    router.push(route);
   }
 
   render() {
@@ -30,5 +33,5 @@ export default class QuestionNew extends React.Component {
 
 QuestionNew.contextTypes = {
   router: PropTypes.object,
-  isLoggedIn: PropTypes.bool,
+  isAdmin: PropTypes.bool,
 };
