@@ -23,6 +23,12 @@ function transitionToQuestion(id, router) {
   router.push(`/${id}`);
 }
 
+// Intercept the click events on the buttons to prevent button clicks from propagating to the row
+function clickIntercept(event, handlerFunc) {
+  event.stopPropagation();
+  handlerFunc();
+}
+
 export default function QuestionRow({
   question,
   onDelete,
@@ -54,19 +60,19 @@ export default function QuestionRow({
         <td>
           <ApproveButton
             disabled={status === 'approved'}
-            onClick={onApprove}
+            onClick={(e) => clickIntercept(e, onApprove)}
           />
 
           <RejectButton
             disabled={status === 'rejected'}
-            onClick={onReject}
+            onClick={(e) => clickIntercept(e, onReject)}
           />
         </td>
       )}
 
       {hasDeleteColumn && (
         <td>
-          <DeleteButton onClick={onDelete} />
+          <DeleteButton onClick={(e) => clickIntercept(e, onDelete)} />
         </td>
       )}
     </tr>
