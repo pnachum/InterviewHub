@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import MarkdownEditor from './MarkdownEditor';
 import { SubmitButton } from '../shared/Buttons';
+import { PageHeader } from 'react-bootstrap';
 
 const propTypes = {
   onSubmit: PropTypes.func.isRequired,
@@ -47,15 +48,13 @@ export default class QuestionForm extends React.Component {
 
     return (
       <div>
-        <div className="page-header">
-          <h2>
-            <input
-              placeholder="Title"
-              value={title}
-              onChange={this.onTitleChange}
-            />
-          </h2>
-        </div>
+        <PageHeader>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={this.onTitleChange}
+          />
+        </PageHeader>
 
         <div className="row">
           <MarkdownEditor
