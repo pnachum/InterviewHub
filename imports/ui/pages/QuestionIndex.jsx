@@ -35,9 +35,10 @@ QuestionIndex.propTypes = propTypes;
 export default createContainer((props) => {
   const questionsHandle = Meteor.subscribe('questions.approved');
   const isLoading = !questionsHandle.ready();
+  const questions = Questions.find({ status: 'approved' }, { sort: { createdAt: -1 } }).fetch();
   return Object.assign(
     {
-      questions: Questions.find({ status: 'approved' }).fetch(),
+      questions,
       isLoading,
     },
     // Pass through everything that came from the router
