@@ -14,6 +14,12 @@ Questions.schema = new SimpleSchema({
 });
 Questions.attachSchema(Questions.schema);
 
+Questions.helpers({
+  solutions() {
+    return Solutions.find({ questionId: this._id }, { sort: { createdAt: -1 } });
+  }
+});
+
 // TODO: Figure out why Solutions and associated publications/methods can't be in another file
 export const Solutions = new Mongo.Collection('Solutions');
 Solutions.schema = new SimpleSchema({
@@ -52,7 +58,7 @@ if (Meteor.isServer) {
       children: [{
         find(question) {
           if (question.status === 'approved' || isUserAdmin(this.userId)) {
-            return Solutions.find({ questionId: question._id });
+            return question.solutions();
           } else {
             this.stop();
             return;

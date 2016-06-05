@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import QuestionShape from '../shapes/QuestionShape';
 import SolutionShape from '../shapes/SolutionShape';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Questions, Solutions } from '../../api/questions/questions';
+import { Questions } from '../../api/questions/questions';
 import { Meteor } from 'meteor/meteor';
 import QuestionForm from '../questions/QuestionForm';
 import QuestionContent from '../questions/QuestionContent';
@@ -124,7 +124,7 @@ export default createContainer((props) => {
   const questionHandle = Meteor.subscribe('question', id);
   const isLoading = !questionHandle.ready();
   const question = Questions.findOne(id);
-  const solutions = Solutions.find({ questionId: id }).fetch();
+  const solutions = isLoading ? [] : question.solutions().fetch();
   const userId = Meteor.userId();
   return Object.assign(
     {
