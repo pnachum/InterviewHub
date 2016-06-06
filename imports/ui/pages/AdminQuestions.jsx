@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 import AdminQuestionsTable from '../components/admin/AdminQuestionsTable';
 import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Questions } from '../../api/questions/questions.js';
+import { Questions } from '../../api/questions/questions';
 import { Meteor } from 'meteor/meteor';
 import LoadingIcon from '../components/shared/LoadingIcon';
-import { remove, update } from '../../api/questions/methods.js';
+import { remove, update } from '../../api/questions/methods';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,

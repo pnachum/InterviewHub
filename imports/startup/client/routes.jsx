@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import App from '../../ui/pages/App.jsx';
 import AdminApp from '../../ui/pages/AdminApp';
 import AdminQuestions from '../../ui/pages/AdminQuestions';
+import AdminIssues from '../../ui/pages/AdminIssues';
 
 import QuestionIndex from '../../ui/pages/QuestionIndex';
 import QuestionShow from '../../ui/pages/QuestionShow';
@@ -17,6 +18,7 @@ export default (
     <Route path="/" component={App}>
       <Route path="admin" component={AdminApp} onEnter={requireAdmin}>
         <IndexRoute component={AdminQuestions} />
+        <Route path="issues" component={AdminIssues} />
       </Route>
 
       <Route path="" component={QuestionApp}>

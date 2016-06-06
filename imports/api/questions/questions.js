@@ -1,11 +1,14 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Solutions } from '../solutions/solutions';
+import { Issues } from '../issues/issues';
 
 class QuestionsCollection extends Mongo.Collection {
-  // Override remove to cascade-delete associated solutions
+  // Override remove to cascade-delete associated solutions and issues
   remove(selector, callback) {
     Solutions.remove({ questionId: selector });
+    Issues.remove({ questionId: selector });
+
     return super.remove(selector, callback);
   }
 }

@@ -11,7 +11,9 @@ import { DeleteButton, EditButton } from '../components/shared/Buttons';
 import QuestionSolutions from '../components/questions/QuestionSolutions';
 import { isUserAdmin } from '../../helpers/Roles';
 import { remove, update } from '../../api/questions/methods.js';
-import { insert } from '../../api/solutions/methods.js';
+import { insert as insertSolution } from '../../api/solutions/methods.js';
+import { insert as insertIssue } from '../../api/issues/methods.js';
+import IssueModal from '../components/questions/IssueModal';
 
 const propTypes = {
   question: QuestionShape,
@@ -20,13 +22,16 @@ const propTypes = {
   deleteQuestion: PropTypes.func,
   updateQuestion: PropTypes.func,
   submitSolution: PropTypes.func,
+  submitIssue: PropTypes.func,
   isLoading: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
 };
 
 const defaultProps = {
   deleteQuestion: () => {},
   updateQuestion: () => {},
   submitSolution: () => {},
+  submitIssue: () => {},
 };
 
 class QuestionShow extends React.Component {
@@ -36,11 +41,15 @@ class QuestionShow extends React.Component {
 
     this.state = {
       isEditing: false,
+      showIssueModal: false,
     };
 
     this.edit = this.edit.bind(this);
     this.deleteQuestion = this.deleteQuestion.bind(this);
     this.updateQuestion = this.updateQuestion.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.onIssueSubmit = this.onIssueSubmit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
@@ -49,6 +58,21 @@ class QuestionShow extends React.Component {
     if (!isAdmin && (question == null || question.status !== 'approved')) {
       this.transitionToIndex();
     }
+  }
+
+  openModal() {
+    this.setState({ showIssueModal: true });
+  }
+
+  onIssueSubmit(issueContent) {
+    const questionId = this.props.question._id;
+    const userId = this.props.userId;
+    this.props.submitIssue(this.props.question._id, issueContent);
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.setState({ showIssueModal: false });
   }
 
   transitionToIndex() {
@@ -78,7 +102,7 @@ class QuestionShow extends React.Component {
       submitSolution,
     } = this.props;
 
-    const { isEditing } = this.state;
+    const { isEditing, showIssueModal } = this.state;
 
     if (isLoading) {
       return <LoadingIcon />;
@@ -101,12 +125,21 @@ class QuestionShow extends React.Component {
                 <EditButton onClick={this.edit} />
               </div>
             )}
+            <button onClick={this.openModal}>Submit an issue</button>
             <QuestionContent question={question} />
 
             <QuestionSolutions
               solutions={solutions}
               onSolutionSubmit={(content) => submitSolution(question._id, content)}
             />
+
+            {showIssueModal && (
+              <IssueModal
+                onSubmit={this.onIssueSubmit}
+                onHide={this.closeModal}
+              />
+            )}
+
           </div>
         );
       }
@@ -132,7 +165,8 @@ export default createContainer((props) => {
     {
       deleteQuestion: questionId => remove.call({ questionId }),
       updateQuestion: (questionId, data) => update.call({ questionId, data }),
-      submitSolution: (questionId, content) => insert.call({ questionId, content }),
+      submitSolution: (questionId, content) => insertSolution.call({ questionId, content }),
+      submitIssue: (questionId, content) => insertIssue.call({ questionId, content }),
       solutions,
       isLoading,
       question,
