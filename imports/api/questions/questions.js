@@ -23,7 +23,7 @@ Questions.attachSchema(Questions.schema);
 Questions.helpers({
   solutions() {
     return Solutions.find({ questionId: this._id }, { sort: { createdAt: -1 } });
-  }
+  },
 });
 
 // Deny all client-side updates

@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Questions } from '../questions'
-import { Solutions } from '../../solutions/solutions';
+import { Questions } from '../questions';
 import { isUserAdmin } from '../../../helpers/Roles';
 
 if (Meteor.isServer) {

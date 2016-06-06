@@ -52,7 +52,7 @@ const DataSchema = new SimpleSchema({
     type: String,
     optional: true,
   },
-})
+});
 
 export const update = new ValidatedMethod({
   name: 'questions.update',
