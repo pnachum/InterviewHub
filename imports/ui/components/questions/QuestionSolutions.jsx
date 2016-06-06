@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import SolutionShape from '../shapes/SolutionShape';
+import SolutionShape from '../../shapes/SolutionShape';
 import SolutionsList from './SolutionsList';
 import SolutionForm from './SolutionForm';
 import { LinkButton } from '../shared/Buttons';

@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import AdminQuestionsTable from '../admin/AdminQuestionsTable';
+import AdminQuestionsTable from '../components/admin/AdminQuestionsTable';
 import QuestionShape from '../shapes/QuestionShape';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import { Meteor } from 'meteor/meteor';
-import LoadingIcon from '../shared/LoadingIcon';
+import LoadingIcon from '../components/shared/LoadingIcon';
 import { remove, update } from '../../api/questions/methods.js';
 
 const propTypes = {

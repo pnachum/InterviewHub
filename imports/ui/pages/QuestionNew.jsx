@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
-import QuestionForm from '../questions/QuestionForm';
+import QuestionForm from '../components/questions/QuestionForm';
 import { Link } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
 

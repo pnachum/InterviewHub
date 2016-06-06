@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Questions } from '../../api/questions/questions.js';
 import QuestionShape from '../shapes/QuestionShape';
-import LoadingIcon from '../shared/LoadingIcon';
-import QuestionsTable from '../shared/QuestionsTable';
+import LoadingIcon from '../components/shared/LoadingIcon';
+import QuestionsTable from '../components/shared/QuestionsTable';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,

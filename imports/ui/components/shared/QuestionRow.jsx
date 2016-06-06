@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import QuestionShape from '../shapes/QuestionShape';
+import QuestionShape from '../../shapes/QuestionShape';
 import { ApproveButton, RejectButton, DeleteButton } from '../shared/Buttons';
 
 const propTypes = {

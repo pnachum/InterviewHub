@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import SolutionShape from '../shapes/SolutionShape';
+import SolutionShape from '../../shapes/SolutionShape';
 import Markdown from 'react-remarkable';
 
 const propTypes = {

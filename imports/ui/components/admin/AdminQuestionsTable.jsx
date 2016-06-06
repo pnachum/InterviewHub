@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import QuestionShape from '../shapes/QuestionShape';
+import QuestionShape from '../../shapes/QuestionShape';
 import QuestionsTable from '../shared/QuestionsTable';
 
 const propTypes = {
