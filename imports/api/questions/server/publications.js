@@ -4,11 +4,11 @@ import { Solutions } from '../../solutions/solutions';
 import { isUserAdmin } from '../../../helpers/Roles';
 
 if (Meteor.isServer) {
-  Meteor.publish('questions.approved', function approvedQuestionsPublication() {
+  Meteor.publish('questions.approved', function approvedQuestions() {
     return Questions.find({ status: 'approved' });
   });
 
-  Meteor.publish('questions.all', function allQuestionsPublication() {
+  Meteor.publish('questions.all', function allQuestions() {
     if (isUserAdmin(this.userId)) {
       return Questions.find({});
     } else {
@@ -17,7 +17,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Meteor.publishComposite('question', function(questionId) {
+  Meteor.publishComposite('question', function questionWithSolutions(questionId) {
     return {
       find() {
         const question = Questions.findOne(questionId);
