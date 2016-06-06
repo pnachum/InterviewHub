@@ -12,8 +12,7 @@ if (Meteor.isServer) {
     if (isUserAdmin(this.userId)) {
       return Questions.find({});
     } else {
-      this.stop();
-      return;
+      return this.ready();
     }
   });
 
@@ -24,8 +23,7 @@ if (Meteor.isServer) {
         if (question.status === 'approved' || isUserAdmin(this.userId)) {
           return Questions.find(questionId);
         } else {
-          this.stop();
-          return;
+          return this.ready();
         }
       },
       children: [{
@@ -33,8 +31,7 @@ if (Meteor.isServer) {
           if (question.status === 'approved' || isUserAdmin(this.userId)) {
             return question.solutions();
           } else {
-            this.stop();
-            return;
+            return this.ready();
           }
         },
       }],
