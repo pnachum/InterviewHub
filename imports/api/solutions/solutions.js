@@ -9,3 +9,10 @@ Solutions.schema = new SimpleSchema({
   createdAt: { type: Date },
 });
 Solutions.attachSchema(Solutions.schema);
+
+// Deny all client-side updates
+Solutions.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});

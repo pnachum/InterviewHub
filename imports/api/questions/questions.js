@@ -17,3 +17,10 @@ Questions.helpers({
     return Solutions.find({ questionId: this._id }, { sort: { createdAt: -1 } });
   }
 });
+
+// Deny all client-side updates
+Questions.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; },
+});
