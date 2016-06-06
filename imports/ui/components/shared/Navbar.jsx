@@ -9,7 +9,7 @@ export default function Navbar(props, { isAdmin }) {
         <ul className="nav navbar-nav">
           <li><Link to="/">All questions</Link></li>
           <li><Link to="/new">Submit question</Link></li>
-          {isAdmin && <li><Link to="admin">Admin</Link></li>}
+          {isAdmin && <li><Link to="/admin">Admin</Link></li>}
           <li><AccountsUIWrapper /></li>
           {/*<li><a href="#" {{action 'randomQuestion'}}>Random question</a></li>*/}
         </ul>
