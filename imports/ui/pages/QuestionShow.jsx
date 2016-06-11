@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { withRouter } from 'react-router';
 import QuestionShape from '../shapes/QuestionShape';
 import SolutionShape from '../shapes/SolutionShape';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -21,6 +22,7 @@ const propTypes = {
   updateQuestion: PropTypes.func,
   submitSolution: PropTypes.func,
   isLoading: PropTypes.bool.isRequired,
+  router: PropTypes.object,
 };
 
 const defaultProps = {
@@ -52,7 +54,7 @@ class QuestionShow extends React.Component {
   }
 
   transitionToIndex() {
-    this.context.router.push('/');
+    this.props.router.push('/');
   }
 
   deleteQuestion() {
@@ -117,11 +119,7 @@ class QuestionShow extends React.Component {
 QuestionShow.propTypes = propTypes;
 QuestionShow.defaultProps = defaultProps;
 
-QuestionShow.contextTypes = {
-  router: PropTypes.object,
-};
-
-export default createContainer((props) => {
+const MeteorContainer = createContainer((props) => {
   const id = props.params.id;
   const questionHandle = Meteor.subscribe('question', id);
   const isLoading = !questionHandle.ready();
@@ -145,3 +143,5 @@ export default createContainer((props) => {
     props
   );
 }, QuestionShow);
+
+export default withRouter(MeteorContainer);

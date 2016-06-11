@@ -1,8 +1,12 @@
 import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
 import QuestionForm from '../components/questions/QuestionForm';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
+
+const propTypes = {
+  router: PropTypes.object,
+}
 
 function onSubmit(questionData, isAdmin, router) {
   insert.call(questionData);
@@ -12,7 +16,7 @@ function onSubmit(questionData, isAdmin, router) {
   router.push(route);
 }
 
-export default function QuestionNew(props, { isAdmin, router }) {
+function QuestionNew({ router }, { isAdmin }) {
   return (
     <div>
       <strong>Guidelines</strong>
@@ -28,7 +32,9 @@ export default function QuestionNew(props, { isAdmin, router }) {
   );
 }
 
+QuestionNew.propTypes = propTypes;
 QuestionNew.contextTypes = {
-  router: PropTypes.object,
   isAdmin: PropTypes.bool,
 };
+
+export default withRouter(QuestionNew);

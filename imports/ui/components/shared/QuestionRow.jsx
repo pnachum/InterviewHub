@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import QuestionShape from '../../shapes/QuestionShape';
 import { ApproveButton, RejectButton, DeleteButton } from '../shared/Buttons';
 
@@ -11,6 +11,7 @@ const propTypes = {
   hasStatusColumn: PropTypes.bool,
   hasApprovalColumn: PropTypes.bool,
   hasDeleteColumn: PropTypes.bool,
+  router: PropTypes.object,
 };
 
 const defaultProps = {
@@ -29,7 +30,7 @@ function clickIntercept(event, handlerFunc) {
   handlerFunc();
 }
 
-export default function QuestionRow({
+function QuestionRow({
   question,
   onDelete,
   onApprove,
@@ -37,7 +38,6 @@ export default function QuestionRow({
   hasStatusColumn,
   hasApprovalColumn,
   hasDeleteColumn,
-}, {
   router,
 }) {
   const { _id, title, status } = question;
@@ -87,6 +87,5 @@ const styles = {
 
 QuestionRow.propTypes = propTypes;
 QuestionRow.defaultProps = defaultProps;
-QuestionRow.contextTypes = {
-  router: PropTypes.object,
-};
+
+export default withRouter(QuestionRow);
