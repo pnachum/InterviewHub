@@ -3,10 +3,12 @@ import { pick } from 'lodash';
 import QuestionForm from '../components/questions/QuestionForm';
 import { Link, withRouter } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
+import withUserInfo from '../../helpers/withUserInfo';
 
 const propTypes = {
   router: PropTypes.object,
-}
+  isAdmin: PropTypes.bool.isRequired,
+};
 
 function onSubmit(questionData, isAdmin, router) {
   insert.call(questionData);
@@ -16,7 +18,7 @@ function onSubmit(questionData, isAdmin, router) {
   router.push(route);
 }
 
-function QuestionNew({ router }, { isAdmin }) {
+function QuestionNew({ router, isAdmin }) {
   return (
     <div>
       <strong>Guidelines</strong>
@@ -33,8 +35,5 @@ function QuestionNew({ router }, { isAdmin }) {
 }
 
 QuestionNew.propTypes = propTypes;
-QuestionNew.contextTypes = {
-  isAdmin: PropTypes.bool,
-};
 
-export default withRouter(QuestionNew);
+export default withUserInfo(withRouter(QuestionNew));

@@ -1,15 +1,16 @@
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
+import withUserInfo from '../../helpers/withUserInfo';
 
 const propTypes = {
   router: PropTypes.object,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 class AdminApp extends React.Component {
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { isAdmin } = this.context;
-    const { router } = this.props;
+    const { router, isAdmin } = this.props;
     // When an admin is on this page and logs out
     if (!isAdmin) {
       router.push('/');
@@ -24,8 +25,5 @@ class AdminApp extends React.Component {
 }
 
 AdminApp.propTypes = propTypes;
-AdminApp.contextTypes = {
-  isAdmin: PropTypes.bool,
-};
 
-export default withRouter(AdminApp);
+export default withUserInfo(withRouter(AdminApp));

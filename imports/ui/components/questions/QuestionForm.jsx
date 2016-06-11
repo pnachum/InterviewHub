@@ -2,19 +2,21 @@ import React, { PropTypes } from 'react';
 import MarkdownEditor from './MarkdownEditor';
 import { SubmitButton } from '../shared/Buttons';
 import { PageHeader } from 'react-bootstrap';
+import withUserInfo from '../../../helpers/withUserInfo';
 
 const propTypes = {
   onSubmit: PropTypes.func.isRequired,
   // Pre-populate the form if these are specified
   content: PropTypes.string,
   title: PropTypes.string,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 function canSubmit({ title, content, isLoggedIn }) {
   return isLoggedIn && title && title.length && content && content.length;
 }
 
-export default class QuestionForm extends React.Component {
+class QuestionForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -37,8 +39,7 @@ export default class QuestionForm extends React.Component {
   }
 
   render() {
-    const { onSubmit } = this.props;
-    const { isLoggedIn } = this.context;
+    const { onSubmit, isLoggedIn } = this.props;
     const { title, content } = this.state;
 
     return (
@@ -69,6 +70,4 @@ export default class QuestionForm extends React.Component {
 }
 
 QuestionForm.propTypes = propTypes;
-QuestionForm.contextTypes = {
-  isLoggedIn: PropTypes.bool,
-};
+export default withUserInfo(QuestionForm);

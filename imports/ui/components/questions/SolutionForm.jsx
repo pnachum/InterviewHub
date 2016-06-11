@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react';
 import { SubmitButton } from '../shared/Buttons';
 import MarkdownEditor from './MarkdownEditor';
+import withUserInfo from '../../../helpers/withUserInfo';
 
 const propTypes = {
   onSubmit: PropTypes.func,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
   onSubmit: () => {},
 };
 
-export default class SolutionForm extends React.Component {
+class SolutionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +34,7 @@ export default class SolutionForm extends React.Component {
 
   render() {
     const { newContent } = this.state;
-    const { isLoggedIn } = this.context;
+    const { isLoggedIn } = this.props;
     return (
       <div>
         <div className="row">
@@ -54,6 +56,4 @@ export default class SolutionForm extends React.Component {
 
 SolutionForm.propTypes = propTypes;
 SolutionForm.defaultProps = defaultProps;
-SolutionForm.contextTypes = {
-  isLoggedIn: PropTypes.bool,
-}
+export default withUserInfo(SolutionForm);
