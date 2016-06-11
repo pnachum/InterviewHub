@@ -1,11 +1,21 @@
+// Reaact dependencies
 import React, { PropTypes } from 'react';
-import AdminQuestionsTable from '../components/admin/AdminQuestionsTable';
-import QuestionShape from '../shapes/QuestionShape';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Questions } from '../../api/questions/questions';
+
+// Meteor dependencies
 import { Meteor } from 'meteor/meteor';
-import LoadingIcon from '../components/shared/LoadingIcon';
+import { createContainer } from 'meteor/react-meteor-data';
+
+// Shapes
+import QuestionShape from '../shapes/QuestionShape';
+
+// Methods
 import { remove, update } from '../../api/questions/methods';
+
+// Components
+import LoadingIcon from '../components/shared/LoadingIcon';
+import AdminQuestionsTable from '../components/admin/AdminQuestionsTable';
+
+import { Questions } from '../../api/questions/questions';
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,

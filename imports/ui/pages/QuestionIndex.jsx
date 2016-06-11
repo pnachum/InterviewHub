@@ -1,10 +1,20 @@
+// React dependencies
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+
+// Meteor dependencies
 import { createContainer } from 'meteor/react-meteor-data';
-import { Questions } from '../../api/questions/questions.js';
+
+// Shapes
 import QuestionShape from '../shapes/QuestionShape';
+
+// Components
 import LoadingIcon from '../components/shared/LoadingIcon';
 import QuestionsTable from '../components/shared/QuestionsTable';
+
+import { Questions } from '../../api/questions/questions.js';
+
+
 
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,

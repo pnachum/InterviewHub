@@ -1,18 +1,29 @@
+// React dependencies
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
+
+// Meteor dependencies
+import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
+
+// Methods
+import { remove, update } from '../../api/questions/methods.js';
+import { insert } from '../../api/solutions/methods.js';
+
+// Shapes
 import QuestionShape from '../shapes/QuestionShape';
 import SolutionShape from '../shapes/SolutionShape';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Questions } from '../../api/questions/questions';
-import { Meteor } from 'meteor/meteor';
+
+// Components
 import QuestionForm from '../components/questions/QuestionForm';
 import QuestionContent from '../components/questions/QuestionContent';
 import LoadingIcon from '../components/shared/LoadingIcon';
 import { DeleteButton, EditButton } from '../components/shared/Buttons';
 import QuestionSolutions from '../components/questions/QuestionSolutions';
+
+// Misc
+import { Questions } from '../../api/questions/questions';
 import { isUserAdmin } from '../../helpers/Roles';
-import { remove, update } from '../../api/questions/methods.js';
-import { insert } from '../../api/solutions/methods.js';
 
 const propTypes = {
   question: QuestionShape,
