@@ -4,33 +4,12 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import UserShape from '../shapes/UserShape';
 import { isUserAdmin } from '../../helpers/Roles';
+import { withContext } from 'recompose';
 
 const propTypes = {
   user: UserShape,
+  children: PropTypes.node.isRequired,
 };
-
-class App extends React.Component {
-
-  getChildContext() {
-    const user = this.props.user;
-    const id = user ? user._id : null;
-    return {
-      isAdmin: isUserAdmin(id),
-      isLoggedIn: !!id,
-    };
-  }
-
-  render() {
-    return (
-      <div>
-        <Navbar />
-        <div style={styles.appContent}>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-}
 
 const styles = {
   appContent: {
@@ -38,11 +17,36 @@ const styles = {
   },
 };
 
-App.propTypes = propTypes;
-App.childContextTypes = {
+const childContextTypes = {
   isLoggedIn: PropTypes.bool,
   isAdmin: PropTypes.bool,
 };
+
+function getChildContext({ user }) {
+  const id = user ? user._id : null;
+  return {
+    isAdmin: isUserAdmin(id),
+    isLoggedIn: !!id,
+  };
+}
+
+function App({ children, user }) {
+  return (
+    <div>
+      <Navbar />
+      <div style={styles.appContent}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+App.propTypes = propTypes;
+
+const AppWithContext = withContext(
+  childContextTypes,
+  getChildContext
+)(App);
 
 export default createContainer((props) => {
   return Object.assign(
@@ -50,4 +54,4 @@ export default createContainer((props) => {
     // Pass through everything that came from the router
     props
   );
-}, App);
+}, AppWithContext);
