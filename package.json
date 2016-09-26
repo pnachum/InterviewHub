@@ -6,6 +6,7 @@
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy interviewhub.meteorapp.com --settings settings.json"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "bootstrap": "^3.3.6",
     "lodash": "^4.11.1",
     "meteor-node-stubs": "~0.2.0",
