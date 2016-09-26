@@ -17,7 +17,6 @@ function canSubmit({ title, content, isLoggedIn }) {
 }
 
 class QuestionForm extends React.Component {
-
   constructor(props) {
     super(props);
     const { content, title } = props;

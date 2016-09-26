@@ -14,8 +14,6 @@ import QuestionsTable from '../components/shared/QuestionsTable';
 
 import { Questions } from '../../api/questions/questions.js';
 
-
-
 const propTypes = {
   questions: PropTypes.arrayOf(QuestionShape).isRequired,
   isLoading: PropTypes.bool.isRequired,

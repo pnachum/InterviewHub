@@ -42,6 +42,10 @@ const defaultProps = {
   submitSolution: () => {},
 };
 
+function transitionToIndex(router) {
+  router.push('/');
+}
+
 class QuestionShow extends React.Component {
 
   constructor(props) {
@@ -60,17 +64,14 @@ class QuestionShow extends React.Component {
     const { isAdmin, question } = this.props;
     // When an admin is on this page and logs out
     if (!isAdmin && (question == null || question.status !== 'approved')) {
-      this.transitionToIndex();
+      transitionToIndex(router);
     }
   }
 
-  transitionToIndex() {
-    this.props.router.push('/');
-  }
-
   deleteQuestion() {
-    this.props.deleteQuestion(this.props.question._id);
-    this.transitionToIndex();
+    const { deleteQuestion, question, router } = this.props;
+    deleteQuestion(question._id);
+    transitionToIndex(router);
   }
 
   edit() {
@@ -78,7 +79,8 @@ class QuestionShow extends React.Component {
   }
 
   updateQuestion(data) {
-    this.props.updateQuestion(this.props.question._id, data);
+    const { updateQuestion, question } = this.props;
+    updateQuestion(question._id, data);
     this.setState({ isEditing: false });
   }
 

@@ -1,4 +1,4 @@
-// Reaact dependencies
+// React dependencies
 import React, { PropTypes } from 'react';
 
 // Meteor dependencies
