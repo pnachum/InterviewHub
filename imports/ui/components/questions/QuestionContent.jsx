@@ -1,13 +1,15 @@
+// @flow
+
 import React, { PropTypes } from 'react';
-import QuestionShape from '../../shapes/QuestionShape';
+import type { Question } from '../../shapes/QuestionShape';
 import Markdown from 'react-remarkable';
 import { PageHeader } from 'react-bootstrap';
 
-const propTypes = {
-  question: QuestionShape.isRequired,
+type Props = {
+  question: Question,
 };
 
-export default function QuestionContent({ question }) {
+export default function QuestionContent({ question }: Props) {
   const { title, content } = question;
 
   return (
@@ -19,5 +21,3 @@ export default function QuestionContent({ question }) {
     </div>
   );
 }
-
-QuestionContent.propTypes = propTypes;

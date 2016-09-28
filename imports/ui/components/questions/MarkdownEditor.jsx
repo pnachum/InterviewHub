@@ -1,12 +1,14 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import Markdown from 'react-remarkable';
 
-const propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+type Props = {
+  value: string,
+  onChange: (e: Event) => void,
 };
 
-export default function MarkdownEditor({ value, onChange }) {
+export default function MarkdownEditor({ value, onChange }: Props) {
   return (
     <div>
       <div className="col-lg-6">
@@ -25,5 +27,3 @@ export default function MarkdownEditor({ value, onChange }) {
     </div>
   );
 }
-
-MarkdownEditor.propTypes = propTypes;

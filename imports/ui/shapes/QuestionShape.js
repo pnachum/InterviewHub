@@ -1,10 +1,12 @@
-import { PropTypes } from 'react';
+// @flow
 
-export default PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
-  createdAt: PropTypes.object.isRequired,
-});
+export type Status = 'approved' | 'pending' | 'rejected';
+
+export type Question = {
+  _id: string,
+  title: string,
+  content: string,
+  status: Status,
+  userId: string,
+  createdAt: Object,
+};

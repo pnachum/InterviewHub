@@ -1,3 +1,5 @@
+// @flow
+
 import { Meteor } from 'meteor/meteor';
 import { Questions } from '../questions';
 import { isUserAdmin } from '../../../helpers/Roles';
@@ -15,7 +17,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Meteor.publishComposite('question', function questionWithSolutions(questionId) {
+  Meteor.publishComposite('question', function questionWithSolutions(questionId: string) {
     return {
       find() {
         const question = Questions.findOne(questionId);

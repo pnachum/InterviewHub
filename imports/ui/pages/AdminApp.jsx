@@ -1,13 +1,17 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import withUserInfo from '../../helpers/withUserInfo';
 
-const propTypes = {
-  router: PropTypes.object,
-  isAdmin: PropTypes.bool.isRequired,
+type Props = {
+  router: Object,
+  isAdmin: boolean,
+  children: any,
 };
 
 class AdminApp extends React.Component {
+  props: Props;
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     const { router, isAdmin } = this.props;
@@ -23,7 +27,5 @@ class AdminApp extends React.Component {
     );
   }
 }
-
-AdminApp.propTypes = propTypes;
 
 export default withUserInfo(withRouter(AdminApp));
