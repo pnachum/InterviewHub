@@ -1,35 +1,23 @@
-// @flow
-
 import React, { PropTypes } from 'react';
 import MarkdownEditor from './MarkdownEditor';
 import { SubmitButton } from '../shared/Buttons';
 import { PageHeader } from 'react-bootstrap';
 import withUserInfo from '../../../helpers/withUserInfo';
 
-type Props = {
-  onSubmit: (data: { title: string, content: string }) => void,
+const propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   // Pre-populate the form if these are specified
-  content: string,
-  title: string,
-  isLoggedIn: boolean,
+  content: PropTypes.string,
+  title: PropTypes.string,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
-
-type State = {
-  title: string,
-  content: string,
-}
 
 function canSubmit({ title, content, isLoggedIn }) {
   return isLoggedIn && title && title.length && content && content.length;
 }
 
 class QuestionForm extends React.Component {
-  props: Props;
-  state: State;
-  onContentChange: (e: Event) => void;
-  onTitleChange: (e: Event) => void;
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     const { content, title } = props;
     this.state = {
@@ -80,4 +68,5 @@ class QuestionForm extends React.Component {
   }
 }
 
+QuestionForm.propTypes = propTypes;
 export default withUserInfo(QuestionForm);

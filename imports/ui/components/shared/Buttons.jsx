@@ -1,22 +1,15 @@
-// @flow
-
 import React, { PropTypes } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 
-type Props = {
-  onClick: (e: Event) => void,
-  children?: any,
-};
-
-type DefaultProps = {
-  onClick: () => void,
+const propTypes = {
+  onClick: PropTypes.func,
 };
 
 const defaultProps = {
   onClick: () => {},
 };
 
-export function DeleteButton(props: Props) {
+export function DeleteButton(props) {
   return (
     <Button
       bsStyle="danger"
@@ -28,7 +21,7 @@ export function DeleteButton(props: Props) {
   );
 }
 
-export function EditButton(props: Props) {
+export function EditButton(props) {
   return (
     <Button
       bsStyle="warning"
@@ -40,7 +33,7 @@ export function EditButton(props: Props) {
   );
 }
 
-function GreenButton(props: Props) {
+function GreenButton(props) {
   return (
     <Button
       bsStyle="success"
@@ -51,7 +44,7 @@ function GreenButton(props: Props) {
   );
 }
 
-export function SubmitButton(props: Props) {
+export function SubmitButton(props) {
   return (
     <GreenButton {...props}>
       Submit
@@ -59,7 +52,7 @@ export function SubmitButton(props: Props) {
   );
 }
 
-export function ApproveButton(props: Props) {
+export function ApproveButton(props) {
   return (
     <GreenButton {...props} title="Approve">
       <Glyphicon glyph="ok" />
@@ -67,7 +60,7 @@ export function ApproveButton(props: Props) {
   );
 }
 
-export function RejectButton(props: Props) {
+export function RejectButton(props) {
   return (
     <GreenButton {...props} title="Reject">
       <Glyphicon glyph="remove" />
@@ -75,7 +68,7 @@ export function RejectButton(props: Props) {
   );
 }
 
-export function LinkButton(props: Props) {
+export function LinkButton(props) {
   return (
     <Button bsStyle="link" {...props}>
       {props.children}
@@ -91,5 +84,6 @@ export function LinkButton(props: Props) {
   SubmitButton,
   LinkButton,
 ].forEach(component => {
+  component.propTypes = propTypes;
   component.defaultProps = defaultProps;
 });

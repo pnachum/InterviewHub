@@ -1,5 +1,3 @@
-// @flow
-
 // React dependencies
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
@@ -13,8 +11,8 @@ import { remove, update } from '../../api/questions/methods.js';
 import { insert } from '../../api/solutions/methods.js';
 
 // Shapes
-import type { Question } from '../shapes/QuestionShape';
-import type { Solution } from '../shapes/SolutionShape';
+import QuestionShape from '../shapes/QuestionShape';
+import SolutionShape from '../shapes/SolutionShape';
 
 // Components
 import QuestionForm from '../components/questions/QuestionForm';
@@ -27,46 +25,30 @@ import QuestionSolutions from '../components/questions/QuestionSolutions';
 import { Questions } from '../../api/questions/questions';
 import { isUserAdmin } from '../../helpers/Roles';
 
-type Props = {
-  question: Question,
-  solutions: Solution[],
-  isAdmin: boolean,
-  deleteQuestion: (questionId: string) => void,
-  updateQuestion: (questionId: string, data: { content: string, title: string }) => void,
-  submitSolution: (questionId: string, content: string) => void,
-  isLoading: boolean,
-  router: Object,
-};
-
-type DefaultProps = {
-  deleteQuestion: (questionId: string) => void,
-  updateQuestion: (questionId: string, data: { content: string, title: string }) => void,
-  submitSolution: (questionId: string, content: string) => void,
-};
-
-type State = {
-  isEditing: boolean,
+const propTypes = {
+  question: QuestionShape,
+  solutions: PropTypes.arrayOf(SolutionShape).isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  deleteQuestion: PropTypes.func,
+  updateQuestion: PropTypes.func,
+  submitSolution: PropTypes.func,
+  isLoading: PropTypes.bool.isRequired,
+  router: PropTypes.object,
 };
 
 const defaultProps = {
-  deleteQuestion: (questionId) => {},
-  updateQuestion: (questionId, data) => {},
-  submitSolution: (questionId, content) => {},
+  deleteQuestion: () => {},
+  updateQuestion: () => {},
+  submitSolution: () => {},
 };
 
-function transitionToIndex(router: Object) {
+function transitionToIndex(router) {
   router.push('/');
 }
 
 class QuestionShow extends React.Component {
-  static defaultProps: DefaultProps;
-  props: Props;
-  state: State;
-  edit: () => void;
-  deleteQuestion: () => void;
-  updateQuestion: (data: { content: string, title: string }) => void;
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -79,7 +61,7 @@ class QuestionShow extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    const { isAdmin, question, router } = this.props;
+    const { isAdmin, question } = this.props;
     // When an admin is on this page and logs out
     if (!isAdmin && (question == null || question.status !== 'approved')) {
       transitionToIndex(router);
@@ -147,6 +129,7 @@ class QuestionShow extends React.Component {
   }
 }
 
+QuestionShow.propTypes = propTypes;
 QuestionShow.defaultProps = defaultProps;
 
 const MeteorContainer = createContainer((props) => {

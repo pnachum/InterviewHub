@@ -1,36 +1,19 @@
-// @flow
-
 import React, { PropTypes } from 'react';
 import { SubmitButton } from '../shared/Buttons';
 import MarkdownEditor from './MarkdownEditor';
 import withUserInfo from '../../../helpers/withUserInfo';
 
-
-type Props = {
-  onSubmit: (content: string) => void,
-  isLoggedIn: boolean,
-};
-
-type DefaultProps = {
-  onSubmit: (content: string) => void,
-};
-
-type State = {
-  newContent: string,
+const propTypes = {
+  onSubmit: PropTypes.func,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
-  onSubmit: (content) => {},
+  onSubmit: () => {},
 };
 
 class SolutionForm extends React.Component {
-  static defaultProps: DefaultProps;
-  props: Props;
-  state: State;
-  newContentChanged: (e: Event) => void;
-  onSubmit: () => void;
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
       newContent: '',
@@ -71,5 +54,6 @@ class SolutionForm extends React.Component {
   }
 }
 
+SolutionForm.propTypes = propTypes;
 SolutionForm.defaultProps = defaultProps;
 export default withUserInfo(SolutionForm);

@@ -20,3 +20,4 @@ export default class AccountsUIWrapper extends React.Component {
     return <span ref="container" />;
   }
 }
+

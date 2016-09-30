@@ -1,19 +1,16 @@
-// @flow
-
 import React, { PropTypes } from 'react';
 import { pick } from 'lodash';
 import QuestionForm from '../components/questions/QuestionForm';
 import { Link, withRouter } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
 import withUserInfo from '../../helpers/withUserInfo';
-import type { Question } from '../shapes/QuestionShape';
 
-type Props = {
-  router: Object,
-  isAdmin: boolean,
+const propTypes = {
+  router: PropTypes.object,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
-function onSubmit(questionData: Question, isAdmin: boolean, router: Object) {
+function onSubmit(questionData, isAdmin, router) {
   insert.call(questionData);
   alert("Thanks for submitting your question! It's awaiting approval.");
   // Redirect admins to the admin page after submitting a question
@@ -21,7 +18,7 @@ function onSubmit(questionData: Question, isAdmin: boolean, router: Object) {
   router.push(route);
 }
 
-function QuestionNew({ router, isAdmin }: Props) {
+function QuestionNew({ router, isAdmin }) {
   return (
     <div>
       <strong>Guidelines</strong>
@@ -36,5 +33,7 @@ function QuestionNew({ router, isAdmin }: Props) {
     </div>
   );
 }
+
+QuestionNew.propTypes = propTypes;
 
 export default withUserInfo(withRouter(QuestionNew));

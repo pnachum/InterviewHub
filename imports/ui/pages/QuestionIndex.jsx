@@ -1,15 +1,12 @@
-// @flow
-
 // React dependencies
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 // Meteor dependencies
 import { createContainer } from 'meteor/react-meteor-data';
-import Meteor from 'meteor/meteor';
 
 // Shapes
-import type { Question } from '../shapes/QuestionShape';
+import QuestionShape from '../shapes/QuestionShape';
 
 // Components
 import LoadingIcon from '../components/shared/LoadingIcon';
@@ -17,12 +14,12 @@ import QuestionsTable from '../components/shared/QuestionsTable';
 
 import { Questions } from '../../api/questions/questions.js';
 
-type Props = {
-  questions: Question[],
-  isLoading: boolean,
+const propTypes = {
+  questions: PropTypes.arrayOf(QuestionShape).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
-function QuestionIndex({ questions, isLoading }: Props) {
+function QuestionIndex({ questions, isLoading }) {
   if (isLoading) {
     return <LoadingIcon />;
   } else {
@@ -31,6 +28,8 @@ function QuestionIndex({ questions, isLoading }: Props) {
     );
   }
 }
+
+QuestionIndex.propTypes = propTypes;
 
 export default createContainer((props) => {
   const questionsHandle = Meteor.subscribe('questions.approved');

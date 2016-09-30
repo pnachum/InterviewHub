@@ -1,35 +1,20 @@
-// @flow
-
 import React, { PropTypes } from 'react';
-import type { Solution } from '../../shapes/SolutionShape';
+import SolutionShape from '../../shapes/SolutionShape';
 import SolutionsList from './SolutionsList';
 import SolutionForm from './SolutionForm';
 import { LinkButton } from '../shared/Buttons';
 
-type Props = {
-  solutions: Solution[],
-  onSolutionSubmit: (content: string) => void,
-};
-
-type DefaultProps = {
-  onSolutionSubmit: (content: string) => void,
-};
-
-type State = {
-  isShowingSolutions: boolean,
+const propTypes = {
+  solutions: PropTypes.arrayOf(SolutionShape).isRequired,
+  onSolutionSubmit: PropTypes.func,
 };
 
 const defaultProps = {
-  onSolutionSubmit: (content) => {},
+  onSolutionSubmit: () => {},
 };
 
 export default class QuestionSolutions extends React.Component {
-  static defaultProps: DefaultProps;
-  props: Props;
-  state: State;
-  toggleSolutions: () => void;
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -67,4 +52,5 @@ export default class QuestionSolutions extends React.Component {
   }
 }
 
+QuestionSolutions.propTypes = propTypes;
 QuestionSolutions.defaultProps = defaultProps;

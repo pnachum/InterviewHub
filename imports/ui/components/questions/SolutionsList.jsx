@@ -1,14 +1,12 @@
-// @flow
-
 import React, { PropTypes } from 'react';
-import type { Solution } from '../../shapes/SolutionShape';
+import SolutionShape from '../../shapes/SolutionShape';
 import Markdown from 'react-remarkable';
 
-type Props = {
-  solutions: Solution[],
+const propTypes = {
+  solutions: PropTypes.arrayOf(SolutionShape).isRequired,
 };
 
-export default function SolutionsList({ solutions }: Props) {
+export default function SolutionsList({ solutions }) {
   if (solutions && solutions.length) {
     return (
       <div>
@@ -26,3 +24,5 @@ export default function SolutionsList({ solutions }: Props) {
     return <p>No solutions yet. Be the first to submit one!</p>;
   }
 }
+
+SolutionsList.propTypes = propTypes;

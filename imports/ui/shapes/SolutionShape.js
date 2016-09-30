@@ -1,8 +1,8 @@
-// @flow
+import { PropTypes } from 'react';
 
-export type Solution = {
-  _id: string,
-  content: string,
-  userId: string,
-  questionId: string,
-};
+export default PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+  questionId: PropTypes.string.isRequired,
+});
