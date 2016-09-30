@@ -1,12 +1,14 @@
+// @flow
+
 import React, { PropTypes } from 'react';
-import QuestionShape from '../../shapes/QuestionShape';
+import type { Question } from '../../shapes/QuestionShape';
 import QuestionsTable from '../shared/QuestionsTable';
 
-const propTypes = {
-  questions: PropTypes.arrayOf(QuestionShape),
-  onDelete: PropTypes.func.isRequired,
-  onApprove: PropTypes.func.isRequired,
-  onReject: PropTypes.func.isRequired,
+type Props = {
+  questions: Question[],
+  onDelete: (question: Question) => void,
+  onApprove: (question: Question) => void,
+  onReject: (question: Question) => void,
 };
 
 export default function AdminQuestionsTable({
@@ -14,7 +16,7 @@ export default function AdminQuestionsTable({
   onReject,
   onApprove,
   onDelete,
-}) {
+}: Props) {
   return (
     <QuestionsTable
       questions={questions}
@@ -27,5 +29,3 @@ export default function AdminQuestionsTable({
     />
   );
 }
-
-AdminQuestionsTable.propTypes = propTypes;

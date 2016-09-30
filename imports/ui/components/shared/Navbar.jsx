@@ -1,13 +1,15 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 import withUserInfo from '../../../helpers/withUserInfo';
 
-const propTypes = {
-  isAdmin: PropTypes.bool.isRequired,
+type Props = {
+  isAdmin: boolean,
 };
 
-function Navbar({ isAdmin }) {
+function Navbar({ isAdmin }: Props) {
   return (
     <nav className="navbar navbar-default">
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -23,5 +25,4 @@ function Navbar({ isAdmin }) {
   );
 }
 
-Navbar.propTypes = propTypes;
 export default withUserInfo(Navbar);

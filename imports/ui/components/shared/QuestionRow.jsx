@@ -1,33 +1,29 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import { Link, withRouter } from 'react-router';
-import QuestionShape from '../../shapes/QuestionShape';
+import type { Question } from '../../shapes/QuestionShape';
 import { ApproveButton, RejectButton, DeleteButton } from '../shared/Buttons';
 
-const propTypes = {
-  question: QuestionShape,
-  onDelete: PropTypes.func.isRequired,
-  onApprove: PropTypes.func.isRequired,
-  onReject: PropTypes.func.isRequired,
-  hasStatusColumn: PropTypes.bool,
-  hasApprovalColumn: PropTypes.bool,
-  hasDeleteColumn: PropTypes.bool,
-  router: PropTypes.object,
+type Props = {
+  question: Question,
+  onDelete: (e: Event) => void,
+  onApprove: (e: Event) => void,
+  onReject: (e: Event) => void,
+  hasStatusColumn: boolean,
+  hasApprovalColumn:boolean,
+  hasDeleteColumn: boolean,
+  router: Object,
 };
 
-const defaultProps = {
-  hasStatusColumn: false,
-  hasApprovalColumn: false,
-  hasDeleteColumn: false,
-};
-
-function transitionToQuestion(id, router) {
+function transitionToQuestion(id: string, router: Object): void {
   router.push(`/${id}`);
 }
 
 // Intercept the click events on the buttons to prevent button clicks from propagating to the row
-function clickIntercept(event, handlerFunc) {
+function clickIntercept(event: Event, handlerFunc: (e: Event) => void): void {
   event.stopPropagation();
-  handlerFunc();
+  handlerFunc(event);
 }
 
 function QuestionRow({
@@ -35,11 +31,11 @@ function QuestionRow({
   onDelete,
   onApprove,
   onReject,
-  hasStatusColumn,
-  hasApprovalColumn,
-  hasDeleteColumn,
+  hasStatusColumn = false,
+  hasApprovalColumn = false,
+  hasDeleteColumn = false,
   router,
-}) {
+}: Props) {
   const { _id, title, status } = question;
   return (
     <tr
@@ -84,8 +80,5 @@ const styles = {
     cursor: 'pointer',
   },
 };
-
-QuestionRow.propTypes = propTypes;
-QuestionRow.defaultProps = defaultProps;
 
 export default withRouter(QuestionRow);

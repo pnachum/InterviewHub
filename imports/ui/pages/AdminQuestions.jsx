@@ -1,3 +1,5 @@
+// @flow
+
 // React dependencies
 import React, { PropTypes } from 'react';
 
@@ -6,7 +8,7 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
 // Shapes
-import QuestionShape from '../shapes/QuestionShape';
+import type { Question, Status } from '../shapes/QuestionShape';
 
 // Methods
 import { remove, update } from '../../api/questions/methods';
@@ -17,11 +19,11 @@ import AdminQuestionsTable from '../components/admin/AdminQuestionsTable';
 
 import { Questions } from '../../api/questions/questions';
 
-const propTypes = {
-  questions: PropTypes.arrayOf(QuestionShape).isRequired,
-  deleteQuestion: PropTypes.func.isRequired,
-  updateQuestionStatus: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+type Props = {
+  questions: Question[],
+  deleteQuestion: (questionId: string) => void,
+  updateQuestionStatus: (questionId: string, status: Status) => void,
+  isLoading: boolean,
 };
 
 function AdminQuestions({
@@ -29,7 +31,7 @@ function AdminQuestions({
   deleteQuestion,
   updateQuestionStatus,
   isLoading,
-}) {
+}: Props) {
   if (isLoading) {
     return <LoadingIcon />;
   } else {
@@ -43,8 +45,6 @@ function AdminQuestions({
     );
   }
 }
-
-AdminQuestions.propTypes = propTypes;
 
 export default createContainer(() => {
   const questionsHandle = Meteor.subscribe('questions.all');

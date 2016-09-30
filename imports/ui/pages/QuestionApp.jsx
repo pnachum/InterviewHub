@@ -1,6 +1,12 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 
-export default function QuestionApp({ children }) {
+type Props = {
+  children: any,
+};
+
+export default function QuestionApp({ children }: Props) {
   return (
     <div>{children}</div>
   );

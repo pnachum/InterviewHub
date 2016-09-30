@@ -1,14 +1,16 @@
+// @flow
+
 import React, { PropTypes } from 'react';
 import Navbar from '../components/shared/Navbar';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import UserShape from '../shapes/UserShape';
+import type { User } from '../shapes/UserShape';
 import { isUserAdmin } from '../../helpers/Roles';
 import { withContext } from 'recompose';
 
-const propTypes = {
-  user: UserShape,
-  children: PropTypes.node.isRequired,
+type Props = {
+  user: User,
+  children: any,
 };
 
 const styles = {
@@ -30,7 +32,7 @@ function getChildContext({ user }) {
   };
 }
 
-function App({ children, user }) {
+function App({ children, user }: Props) {
   return (
     <div>
       <Navbar />
@@ -40,8 +42,6 @@ function App({ children, user }) {
     </div>
   );
 }
-
-App.propTypes = propTypes;
 
 const AppWithContext = withContext(
   childContextTypes,
