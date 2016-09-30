@@ -6,6 +6,7 @@
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy interviewhub.meteorapp.com --settings settings.json"
   },
   "dependencies": {
+    "babel-preset-stage-1": "^6.16.0",
     "bcrypt": "^0.8.7",
     "bootstrap": "^3.3.7",
     "lodash": "^4.16.2",
