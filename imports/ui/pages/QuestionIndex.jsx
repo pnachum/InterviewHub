@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 // Meteor dependencies
 import { createContainer } from 'meteor/react-meteor-data';
-import Meteor from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 
 // Shapes
 import type { Question } from '../shapes/QuestionShape';
