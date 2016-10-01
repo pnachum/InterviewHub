@@ -2,7 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import type { Solution } from '../../shapes/SolutionShape';
-import Markdown from 'react-remarkable';
+import QuestionSolution from './QuestionSolution';
 
 type Props = {
   solutions: Solution[],
@@ -12,14 +12,7 @@ export default function SolutionsList({ solutions }: Props) {
   if (solutions && solutions.length) {
     return (
       <div>
-        {solutions.map(({ _id, content }) => {
-          return (
-            <div key={_id}>
-              <Markdown source={content} />
-              <hr />
-            </div>
-          );
-        })}
+        {solutions.map(solution => <QuestionSolution key={solution._id} solution={solution} />)}
       </div>
     );
   } else {
