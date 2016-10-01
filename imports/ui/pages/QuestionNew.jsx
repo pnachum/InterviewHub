@@ -1,7 +1,6 @@
 // @flow
 
 import React, { PropTypes } from 'react';
-import { pick } from 'lodash';
 import QuestionForm from '../components/questions/QuestionForm';
 import { Link, withRouter } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
