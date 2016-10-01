@@ -20,6 +20,7 @@ export default function MarkdownEditor({ value, onChange, onBlur }: Props) {
           cols={100}
           rows={10}
           placeholder="Markdown available"
+          autoFocus
         />
       </div>
 
