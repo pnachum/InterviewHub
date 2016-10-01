@@ -6,7 +6,7 @@ import Markdown from 'react-remarkable';
 type Props = {
   value: string,
   onChange: (e: Event) => void,
-  onBlur: (e: Event) => void,
+  onBlur?: (e: Event) => void,
 };
 
 export default function MarkdownEditor({ value, onChange, onBlur }: Props) {
