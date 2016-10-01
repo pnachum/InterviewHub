@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
 import Markdown from 'react-remarkable';
+import { Meteor } from 'meteor/meteor';
 import MarkdownEditor from './MarkdownEditor';
 import { update } from '../../../api/solutions/methods';
 import { createContainer } from 'meteor/react-meteor-data';
+import { canEditSolution } from '../../../helpers/Roles';
 import type { Solution } from '../../shapes/SolutionShape';
 
 type Props = {
   solution: Solution,
+  userId: string,
 };
 
 type State = {
@@ -39,7 +42,10 @@ class QuestionSolution extends React.Component {
   }
 
   edit() {
-    this.setState({ isEditing: true });
+    const { userId, solution } = this.props;
+    if (canEditSolution(userId, solution.userId)) {
+      this.setState({ isEditing: true });
+    }
   }
 
   doneEditing() {
@@ -77,6 +83,7 @@ export default createContainer((props) => {
       updateSolutionContent: (solutionId, userId, newContent) => (
         update.call({ solutionId, userId, newContent })
       ),
+      userId: Meteor.userId(),
     },
     // Pass through everything that came from the router
     props

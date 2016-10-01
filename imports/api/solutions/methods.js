@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Solutions } from './solutions';
-import { isUserAdmin } from '../../helpers/Roles';
+import { isUserAdmin, canEditSolution } from '../../helpers/Roles';
 
 export const insert = new ValidatedMethod({
   name: 'solutions.insert',
@@ -34,12 +34,10 @@ export const update = new ValidatedMethod({
     newContent: { type: String },
   }).validator(),
   run({ solutionId, userId, newContent }) {
-    if (!this.userId) {
+    if (canEditSolution(this.userId, userId)) {
+      Solutions.update(solutionId, { $set: { content: newContent } });
+    } else {
       throw new Meteor.Error('not-authorized');
     }
-    if (userId !== this.userId && !isUserAdmin(this.userId)) {
-      throw new Meteor.Error('not-authorized');
-    }
-    Solutions.update(solutionId, { $set: { content: newContent } });
   }
 });
