@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react';
 import { Link, withRouter } from 'react-router';
 import type { Question } from '../../shapes/QuestionShape';
+import type { Router } from '../../shapes/RouterShape';
 import { ApproveButton, RejectButton, DeleteButton } from '../shared/Buttons';
 
 type Props = {
@@ -13,10 +14,10 @@ type Props = {
   hasStatusColumn: boolean,
   hasApprovalColumn:boolean,
   hasDeleteColumn: boolean,
-  router: Object,
+  router: Router,
 };
 
-function transitionToQuestion(id: string, router: Object): void {
+function transitionToQuestion(id: string, router: Router): void {
   router.push(`/${id}`);
 }
 

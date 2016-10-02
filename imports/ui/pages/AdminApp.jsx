@@ -2,10 +2,11 @@
 
 import React, { PropTypes } from 'react';
 import { withRouter } from 'react-router';
+import type { Router } from '../shapes/RouterShape'
 import withUserInfo from '../../helpers/withUserInfo';
 
 type Props = {
-  router: Object,
+  router: Router,
   isAdmin: boolean,
   children: any,
 };

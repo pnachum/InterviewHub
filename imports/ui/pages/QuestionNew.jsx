@@ -6,13 +6,14 @@ import { Link, withRouter } from 'react-router';
 import { insert } from '../../api/questions/methods.js';
 import withUserInfo from '../../helpers/withUserInfo';
 import type { Question } from '../shapes/QuestionShape';
+import type { Router } from '../shapes/RouterShape';
 
 type Props = {
-  router: Object,
+  router: Router,
   isAdmin: boolean,
 };
 
-function onSubmit(questionData: Question, isAdmin: boolean, router: Object) {
+function onSubmit(questionData: Question, isAdmin: boolean, router: Router) {
   insert.call(questionData);
   alert("Thanks for submitting your question! It's awaiting approval.");
   // Redirect admins to the admin page after submitting a question

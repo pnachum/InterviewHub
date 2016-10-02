@@ -15,6 +15,7 @@ import { insert } from '../../api/solutions/methods.js';
 // Shapes
 import type { Question } from '../shapes/QuestionShape';
 import type { Solution } from '../shapes/SolutionShape';
+import type { Router } from '../shapes/RouterShape';
 
 // Components
 import QuestionForm from '../components/questions/QuestionForm';
@@ -35,7 +36,7 @@ type Props = {
   updateQuestion: (questionId: string, data: { content: string, title: string }) => void,
   submitSolution: (questionId: string, content: string) => void,
   isLoading: boolean,
-  router: Object,
+  router: Router,
 };
 
 type DefaultProps = {
@@ -54,7 +55,7 @@ const defaultProps = {
   submitSolution: (questionId, content) => {},
 };
 
-function transitionToIndex(router: Object) {
+function transitionToIndex(router: Router) {
   router.push('/');
 }
 
