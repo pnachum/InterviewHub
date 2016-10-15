@@ -63,12 +63,10 @@ class QuestionForm extends React.Component {
           />
         </PageHeader>
 
-        <div className="row">
-          <MarkdownEditor
-            value={content}
-            onChange={this.onContentChange}
-          />
-        </div>
+        <MarkdownEditor
+          value={content}
+          onChange={this.onContentChange}
+        />
 
         <SubmitButton
           onClick={() => onSubmit({ title, content })}

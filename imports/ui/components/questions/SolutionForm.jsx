@@ -54,12 +54,10 @@ class SolutionForm extends React.Component {
     const { isLoggedIn } = this.props;
     return (
       <div>
-        <div className="row">
-          <MarkdownEditor
-            value={newContent}
-            onChange={this.newContentChanged}
-          />
-        </div>
+        <MarkdownEditor
+          value={newContent}
+          onChange={this.newContentChanged}
+        />
 
         <SubmitButton
           disabled={!newContent || !isLoggedIn}
